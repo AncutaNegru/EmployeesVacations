@@ -31,7 +31,7 @@ namespace EmployeesVacations.Repositories
                 vacationRequestModel.DaysRequested = dbVacationRequest.DaysRequested;
                 vacationRequestModel.FirstApproval = (ApprovalStatusEnum)dbVacationRequest.FirstApproval;
                 vacationRequestModel.SecondApproval = (ApprovalStatusEnum)dbVacationRequest.SecondApproval;
-                //vacationRequestModel.Status = (ApprovalStatusEnum)dbVacationRequest.Status;
+                vacationRequestModel.Status = (ApprovalStatusEnum)dbVacationRequest.Status;
                 return vacationRequestModel;
             }
             return null;
