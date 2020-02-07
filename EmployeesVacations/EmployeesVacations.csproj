@@ -280,6 +280,8 @@
     <Content Include="Views\BusinessUnit\CreateBusinessUnit.cshtml" />
     <Content Include="Views\BusinessUnit\Index.cshtml" />
     <Content Include="Views\BusinessUnit\EditBusinessUnit.cshtml" />
+    <Content Include="Views\BusinessUnit\DetailsBusinessUnit.cshtml" />
+    <Content Include="Views\BusinessUnit\DeleteBusinessUnit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

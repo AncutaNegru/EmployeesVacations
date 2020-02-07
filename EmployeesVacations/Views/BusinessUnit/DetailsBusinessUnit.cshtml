@@ -1,0 +1,35 @@
+﻿@model EmployeesVacations.Models.BusinessUnitModel
+
+@{
+    ViewBag.Title = "DetailsBusinessUnit";
+}
+
+<h2>DetailsBusinessUnit</h2>
+
+<div>
+    <h4>BusinessUnitModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDBusinessUnitManager)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDBusinessUnitManager)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDBusinessUnit }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

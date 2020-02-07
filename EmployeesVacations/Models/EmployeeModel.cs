@@ -16,6 +16,7 @@ namespace EmployeesVacations.Models
         public DateTime HiringDate { get; set; }
         public int TotalDaysOff { get; set; }
         public int DaysOffLeft { get; set; }
-        
+        public string FullName { get { return FirstName + " " + LastName; } }
+
     }
 }

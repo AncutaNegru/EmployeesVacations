@@ -11,6 +11,7 @@ namespace EmployeesVacations.Controllers
     public class BusinessUnitController : Controller
     {
         private BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository();
+        private EmployeeRepository employeeRepository = new EmployeeRepository();
         // GET: BusinessUnit
         public ActionResult Index()
         {
@@ -19,14 +20,19 @@ namespace EmployeesVacations.Controllers
         }
 
         // GET: BusinessUnit/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            BusinessUnitModel businessUnitDetails = new BusinessUnitModel();
+            businessUnitDetails = businessUnitRepository.GetBusinessUnitByID(id);
+            return View("DetailsBusinessUnit", businessUnitDetails);
         }
 
         // GET: BusinessUnit/Create
         public ActionResult Create()
         {
+            var managers = employeeRepository.GetAllEmployeesWherePositionIsBusinessUnitManager();
+            SelectList listmanagers = new SelectList(managers, "IDEmployee", "FullName");
+            ViewData["manager"] = listmanagers;
             return View("CreateBusinessUnit");
         }
 
@@ -72,24 +78,24 @@ namespace EmployeesVacations.Controllers
         }
 
         // GET: BusinessUnit/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            BusinessUnitModel businessUnitToDelete = businessUnitRepository.GetBusinessUnitByID(id);
+            return View("DeleteBusinessUnit", businessUnitToDelete);
         }
 
         // POST: BusinessUnit/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Guid id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                businessUnitRepository.DeleteBusinessUnit(id);
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View("DeleteBusinessUnit");
             }
         }
     }

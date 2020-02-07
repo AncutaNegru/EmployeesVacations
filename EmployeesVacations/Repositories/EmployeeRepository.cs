@@ -63,6 +63,15 @@ namespace EmployeesVacations.Repositories
             }
             return allEmployeesList;
         }
+        public List<EmployeeModel> GetAllEmployeesWherePositionIsBusinessUnitManager()
+        {
+            List<EmployeeModel> allBusinessUnitsManagersList = new List<EmployeeModel>();
+            foreach (Employee dbEmployee in dbContext.Employees.Where(x => x.Position == 0))
+            {
+                allBusinessUnitsManagersList.Add(MapDbObjectToModel(dbEmployee));
+            }
+            return allBusinessUnitsManagersList;
+        }
         public EmployeeModel GetEmployeeByID(Guid id)
         {
             EmployeeModel employeeModel = MapDbObjectToModel(dbContext.Employees.FirstOrDefault(x => x.IDEmployee == id));
