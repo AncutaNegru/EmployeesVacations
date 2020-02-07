@@ -36,5 +36,68 @@ namespace EmployeesVacations.Repositories
             }
             return null;
         }
+        private VacationRequest MapModelToDbObject(VacationRequestModel vacationRequestModel)
+        {
+            VacationRequest dbVacationRequest = new VacationRequest();
+            if (vacationRequestModel != null)
+            {
+                dbVacationRequest.IDVacationRequest = vacationRequestModel.IDVacationRequest;
+                dbVacationRequest.IDEmployee = vacationRequestModel.IDEmployee;
+                dbVacationRequest.Reason = vacationRequestModel.Reason;
+                dbVacationRequest.StartDate = vacationRequestModel.StartDate;
+                dbVacationRequest.EndDate = vacationRequestModel.EndDate;
+                dbVacationRequest.DaysRequested = vacationRequestModel.DaysRequested;
+                dbVacationRequest.FirstApproval = (int)vacationRequestModel.FirstApproval;
+                dbVacationRequest.SecondApproval = (int)vacationRequestModel.SecondApproval;
+                dbVacationRequest.Status = (int)vacationRequestModel.Status;
+                return dbVacationRequest;
+            }
+            return null;
+        }
+        public List<VacationRequestModel> GetAllVacationRequests()
+        {
+            List<VacationRequestModel> vacationRequestsList = new List<VacationRequestModel>();
+            foreach (VacationRequest dbVacationRequest in dbContext.VacationRequests)
+            {
+                vacationRequestsList.Add(MapDbObjectToModel(dbVacationRequest));
+            }
+            return vacationRequestsList;
+        }
+        public VacationRequestModel GetVacationRequestById(Guid id)
+        {
+            return MapDbObjectToModel(dbContext.VacationRequests.FirstOrDefault(x => x.IDVacationRequest == id));
+        }
+        public void InsertVacationRequest(VacationRequestModel vacationRequestModel)
+        {
+            vacationRequestModel.IDVacationRequest = Guid.NewGuid();
+            dbContext.VacationRequests.InsertOnSubmit(MapModelToDbObject(vacationRequestModel));
+            dbContext.SubmitChanges();
+        }
+        public void UpdateVacationRequest(VacationRequestModel vacationRequestModel)
+        {
+            VacationRequest dbExistingVacationRequest = dbContext.VacationRequests.FirstOrDefault(x => x.IDVacationRequest == vacationRequestModel.IDVacationRequest);
+            if (dbExistingVacationRequest != null)
+            {
+                dbExistingVacationRequest.IDVacationRequest = vacationRequestModel.IDVacationRequest;
+                dbExistingVacationRequest.IDEmployee = vacationRequestModel.IDEmployee;
+                dbExistingVacationRequest.Reason = vacationRequestModel.Reason;
+                dbExistingVacationRequest.StartDate = vacationRequestModel.StartDate;
+                dbExistingVacationRequest.EndDate = vacationRequestModel.EndDate;
+                dbExistingVacationRequest.DaysRequested = vacationRequestModel.DaysRequested;
+                dbExistingVacationRequest.FirstApproval = (int)vacationRequestModel.FirstApproval;
+                dbExistingVacationRequest.SecondApproval = (int)vacationRequestModel.SecondApproval;
+                dbExistingVacationRequest.Status = (int)vacationRequestModel.Status;
+                dbContext.SubmitChanges();
+            }
+        }
+        public void DeleteVacationRequest(Guid id)
+        {
+            VacationRequest vacationRequestToDeleteDb = dbContext.VacationRequests.FirstOrDefault(x => x.IDVacationRequest == id);
+            if(vacationRequestToDeleteDb != null)
+            {
+                dbContext.VacationRequests.DeleteOnSubmit(vacationRequestToDeleteDb);
+                dbContext.SubmitChanges();
+            }
+        }
     }
 }
