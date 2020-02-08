@@ -1,0 +1,67 @@
+﻿@model EmployeesVacations.Models.EmployeeModel
+
+@{
+    ViewBag.Title = "DetailsEmployee";
+}
+
+<h2>DetailsEmployee</h2>
+
+<div>
+    <h4>EmployeeModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDTeam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDTeam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDBusinessUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDBusinessUnit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HiringDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HiringDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalDaysOff)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalDaysOff)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DaysOffLeft)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DaysOffLeft)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDEmployee }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

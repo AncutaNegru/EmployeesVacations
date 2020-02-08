@@ -11,6 +11,8 @@ namespace EmployeesVacations.Controllers
     public class EmployeeController : Controller
     {
         private EmployeeRepository employeeRepository = new EmployeeRepository();
+        private BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository();
+        private TeamRepository teamRepository = new TeamRepository();
         // GET: Employee
         public ActionResult Index()
         {

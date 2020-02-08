@@ -53,6 +53,15 @@ namespace EmployeesVacations.Repositories
             }
             return allTeamsList;
         }
+        public List<TeamModel> GetAllTeamsByBusinessUnitID(Guid id)
+        {
+            List<TeamModel> allTeamsByBusinessUnit = new List<TeamModel>();
+            foreach (Team dbTeam in dbContext.Teams.Where(x => x.IDBusinessUnit == id))
+            {
+                allTeamsByBusinessUnit.Add(MapDbObjectToModel(dbTeam));
+            }
+            return allTeamsByBusinessUnit;
+        }
         public TeamModel GetTeamByID(Guid id)
         {
             TeamModel teamModel = MapDbObjectToModel(dbContext.Teams.FirstOrDefault(x => x.IDTeam == id));

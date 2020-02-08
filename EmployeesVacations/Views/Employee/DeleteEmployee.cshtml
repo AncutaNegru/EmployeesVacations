@@ -1,0 +1,73 @@
+﻿@model EmployeesVacations.Models.EmployeeModel
+
+@{
+    ViewBag.Title = "DeleteEmployee";
+}
+
+<h2>DeleteEmployee</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EmployeeModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDTeam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDTeam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDBusinessUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDBusinessUnit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HiringDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HiringDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalDaysOff)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalDaysOff)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DaysOffLeft)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DaysOffLeft)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -290,9 +290,13 @@
     <Content Include="Views\Team\CreateTeam.cshtml" />
     <Content Include="Views\Team\EditTeam.cshtml" />
     <Content Include="Views\Team\DeleteTeam.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Employee\DetailsEmployee.cshtml" />
+    <Content Include="Views\Employee\CreateEmployee.cshtml" />
+    <Content Include="Views\Employee\EditEmployee.cshtml" />
+    <Content Include="Views\Employee\DeleteEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Employee\" />
     <Folder Include="Views\VacationRequest\" />
   </ItemGroup>
   <ItemGroup>
