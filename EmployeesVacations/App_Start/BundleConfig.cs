@@ -25,6 +25,11 @@ namespace EmployeesVacations
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            // Custom Scripts
+            bundles.Add(new ScriptBundle("~/bundles/Custom").Include(
+                     "~/Scripts/Custom/Employees.js"));
+
         }
     }
 }

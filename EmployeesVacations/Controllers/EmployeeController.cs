@@ -30,13 +30,33 @@ namespace EmployeesVacations.Controllers
         // GET: Employee/Create
         public ActionResult Create()
         {
+            var businessUnits = businessUnitRepository.GetAllBusinessUnits();
+            SelectList listBusinessUnits = new SelectList(businessUnits, "IDBusinessUnit", "Name");
+            ViewData["businessUnit"] = listBusinessUnits;
+            var teams = new List<TeamModel>();
+            SelectList listTeams = new SelectList(teams, "IDTeam", "Name");
+            ViewData["team"] = listTeams;
             return View("CreateEmployee");
+        }
+
+        // GET: Employee/FetchTeamsByBusinessUnitSelected
+        [HttpGet]
+        public JsonResult FetchTeamsByBusinessUnitSelected(Guid id)
+        {
+            var teams = teamRepository.GetAllTeamsByBusinessUnitID(id);
+            return Json(teams, JsonRequestBehavior.AllowGet);
         }
 
         // POST: Employee/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            var businessUnits = businessUnitRepository.GetAllBusinessUnits();
+            SelectList listBusinessUnits = new SelectList(businessUnits, "IDBusinessUnit", "Name");
+            ViewData["businessUnit"] = listBusinessUnits;
+            var teams = new List<TeamModel>();
+            SelectList listTeams = new SelectList(teams, "IDTeam", "Name");
+            ViewData["team"] = listTeams;
             try
             {
                 EmployeeModel employeeModel = new EmployeeModel();
@@ -54,6 +74,12 @@ namespace EmployeesVacations.Controllers
         public ActionResult Edit(Guid id)
         {
             EmployeeModel employeeModel = employeeRepository.GetEmployeeByID(id);
+            var businessUnits = businessUnitRepository.GetAllBusinessUnits();
+            SelectList listBusinessUnits = new SelectList(businessUnits, "IDBusinessUnit", "Name");
+            ViewData["businessUnit"] = listBusinessUnits;
+            var teams = teamRepository.GetAllTeamsByBusinessUnitID(employeeModel.IDBusinessUnit);
+            SelectList listTeams = new SelectList(teams, "IDTeam", "Name");
+            ViewData["team"] = listTeams;
             return View("EditEmployee", employeeModel);
         }
 
@@ -63,6 +89,12 @@ namespace EmployeesVacations.Controllers
         {
             try
             {
+                var businessUnits = businessUnitRepository.GetAllBusinessUnits();
+                SelectList listBusinessUnits = new SelectList(businessUnits, "IDBusinessUnit", "Name");
+                ViewData["businessUnit"] = listBusinessUnits;
+                var teams = new List<TeamModel>();
+                SelectList listTeams = new SelectList(teams, "IDTeam", "Name");
+                ViewData["team"] = listTeams;
                 EmployeeModel employeeModel = new EmployeeModel();
                 UpdateModel(employeeModel);
                 employeeRepository.UpdateEmployee(employeeModel);
