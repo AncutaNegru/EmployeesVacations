@@ -40,6 +40,9 @@ namespace EmployeesVacations.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            var managers = employeeRepository.GetAllEmployeesWherePositionIsBusinessUnitManager();
+            SelectList listmanagers = new SelectList(managers, "IDEmployee", "FullName");
+            ViewData["manager"] = listmanagers;
             try
             {
                 BusinessUnitModel businessUnitModel = new BusinessUnitModel();
