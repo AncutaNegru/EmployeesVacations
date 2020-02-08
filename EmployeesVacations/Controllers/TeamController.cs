@@ -11,6 +11,7 @@ namespace EmployeesVacations.Controllers
     public class TeamController : Controller
     {
         private TeamRepository teamRepository = new TeamRepository();
+        private BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository();
         // GET: Team
         public ActionResult Index()
         {
@@ -28,7 +29,9 @@ namespace EmployeesVacations.Controllers
         // GET: Team/Create
         public ActionResult Create()
         {
-
+            var allBusinessUnits = businessUnitRepository.GetAllBusinessUnits();
+            SelectList listBusinessUnits = new SelectList(allBusinessUnits, "IDBusinessUnit", "Name");
+            ViewData["businessUnit"] = listBusinessUnits;
             return View("CreateTeam");
         }
 
@@ -36,6 +39,9 @@ namespace EmployeesVacations.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            var allBusinessUnits = businessUnitRepository.GetAllBusinessUnits();
+            SelectList listBusinessUnits = new SelectList(allBusinessUnits, "IDBusinessUnit", "Name");
+            ViewData["businessUnit"] = listBusinessUnits;
             try
             {
                 TeamModel teamModel = new TeamModel();

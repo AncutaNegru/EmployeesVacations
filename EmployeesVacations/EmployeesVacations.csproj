@@ -285,10 +285,14 @@
     <Content Include="Views\BusinessUnit\EditBusinessUnit.cshtml" />
     <Content Include="Views\BusinessUnit\DetailsBusinessUnit.cshtml" />
     <Content Include="Views\BusinessUnit\DeleteBusinessUnit.cshtml" />
+    <Content Include="Views\Team\Index.cshtml" />
+    <Content Include="Views\Team\DetailsTeam.cshtml" />
+    <Content Include="Views\Team\CreateTeam.cshtml" />
+    <Content Include="Views\Team\EditTeam.cshtml" />
+    <Content Include="Views\Team\DeleteTeam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Employee\" />
-    <Folder Include="Views\Team\" />
     <Folder Include="Views\VacationRequest\" />
   </ItemGroup>
   <ItemGroup>
