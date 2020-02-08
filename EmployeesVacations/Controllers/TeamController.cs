@@ -12,6 +12,7 @@ namespace EmployeesVacations.Controllers
     {
         private TeamRepository teamRepository = new TeamRepository();
         private BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository();
+        private EmployeeRepository employeeRepository = new EmployeeRepository();
         // GET: Team
         public ActionResult Index()
         {
@@ -32,6 +33,9 @@ namespace EmployeesVacations.Controllers
             var allBusinessUnits = businessUnitRepository.GetAllBusinessUnits();
             SelectList listBusinessUnits = new SelectList(allBusinessUnits, "IDBusinessUnit", "Name");
             ViewData["businessUnit"] = listBusinessUnits;
+            var allTeamLeads = employeeRepository.GetAllEmployeesWherePositionIsTeamLead();
+            SelectList listTeamLeads= new SelectList(allTeamLeads, "IDEmployee", "FullName");
+            ViewData["teamLead"] = listTeamLeads;
             return View("CreateTeam");
         }
 
@@ -42,6 +46,9 @@ namespace EmployeesVacations.Controllers
             var allBusinessUnits = businessUnitRepository.GetAllBusinessUnits();
             SelectList listBusinessUnits = new SelectList(allBusinessUnits, "IDBusinessUnit", "Name");
             ViewData["businessUnit"] = listBusinessUnits;
+            var allTeamLeads = employeeRepository.GetAllEmployeesWherePositionIsTeamLead();
+            SelectList listTeamLeads = new SelectList(allTeamLeads, "IDEmployee", "FullName");
+            ViewData["teamLead"] = listTeamLeads;
             try
             {
                 TeamModel teamModel = new TeamModel();
