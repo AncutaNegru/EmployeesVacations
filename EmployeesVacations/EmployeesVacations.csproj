@@ -298,6 +298,7 @@
     <Content Include="Views\Employee\DeleteEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ViewModels\" />
     <Folder Include="Views\VacationRequest\" />
   </ItemGroup>
   <ItemGroup>

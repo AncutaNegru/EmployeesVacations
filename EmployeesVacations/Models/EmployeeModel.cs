@@ -15,9 +15,12 @@ namespace EmployeesVacations.Models
 
         [DisplayName("Team")]
         public Guid IDTeam { get; set; }
+        public string TeamName { get; set; }
 
         [DisplayName("Business Unit")]
         public Guid IDBusinessUnit { get; set; }
+        public string BusinessUnitName { get; set; }
+
         public DateTime HiringDate { get; set; }
 
         [DisplayName("Total Days Off")]

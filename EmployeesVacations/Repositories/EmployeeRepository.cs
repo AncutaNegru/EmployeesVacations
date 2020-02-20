@@ -28,7 +28,9 @@ namespace EmployeesVacations.Repositories
                 employeeModel.LastName = dbEmployee.LastName;
                 employeeModel.Position = (PositionEnum)dbEmployee.Position;
                 employeeModel.IDTeam = dbEmployee.IDTeam;
+                employeeModel.TeamName = dbEmployee.Team.Name;
                 employeeModel.IDBusinessUnit = dbEmployee.IDBusinessUnit;
+                employeeModel.BusinessUnitName = dbEmployee.BusinessUnit.Name;
                 employeeModel.HiringDate = dbEmployee.HiringDate;
                 employeeModel.TotalDaysOff = dbEmployee.TotalDaysOff;
                 employeeModel.DaysOffLeft = dbEmployee.DaysOffLeft;
@@ -118,5 +120,6 @@ namespace EmployeesVacations.Repositories
                 dbContext.SubmitChanges();
             }
         }
+
     }
 }

@@ -44,6 +44,7 @@ namespace EmployeesVacations.Controllers
         public JsonResult FetchTeamsByBusinessUnitSelected(Guid id)
         {
             var teams = teamRepository.GetAllTeamsByBusinessUnitID(id);
+            var x = Json(teams, JsonRequestBehavior.AllowGet);
             return Json(teams, JsonRequestBehavior.AllowGet);
         }
 
