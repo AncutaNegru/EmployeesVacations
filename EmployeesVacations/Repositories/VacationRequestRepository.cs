@@ -25,6 +25,7 @@ namespace EmployeesVacations.Repositories
             {
                 vacationRequestModel.IDVacationRequest = dbVacationRequest.IDVacationRequest;
                 vacationRequestModel.IDEmployee = dbVacationRequest.IDEmployee;
+                vacationRequestModel.EmployeeFullName = dbVacationRequest.Employee.FirstName + " " + dbVacationRequest.Employee.LastName;
                 vacationRequestModel.Reason = dbVacationRequest.Reason;
                 vacationRequestModel.StartDate = dbVacationRequest.StartDate;
                 vacationRequestModel.EndDate = dbVacationRequest.EndDate;

@@ -1,0 +1,78 @@
+﻿@model EmployeesVacations.Models.VacationRequestModel
+
+@{
+    ViewBag.Title = "DetailsVacationRequest";
+}
+
+<h2>Details Vacation Request</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeFullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeFullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Reason)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Reason)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DaysRequested)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DaysRequested)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstApproval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstApproval)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SecondApproval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecondApproval)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDVacationRequest }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

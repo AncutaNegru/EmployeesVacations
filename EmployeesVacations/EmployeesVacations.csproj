@@ -296,10 +296,14 @@
     <Content Include="Views\Employee\CreateEmployee.cshtml" />
     <Content Include="Views\Employee\EditEmployee.cshtml" />
     <Content Include="Views\Employee\DeleteEmployee.cshtml" />
+    <Content Include="Views\VacationRequest\Index.cshtml" />
+    <Content Include="Views\VacationRequest\DetailsVacationRequest.cshtml" />
+    <Content Include="Views\VacationRequest\CreateVacationRequest.cshtml" />
+    <Content Include="Views\VacationRequest\EditVacationRequest.cshtml" />
+    <Content Include="Views\VacationRequest\DeleteVacationRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
-    <Folder Include="Views\VacationRequest\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
