@@ -9,7 +9,11 @@ namespace EmployeesVacations.Models
     public class EmployeeModel
     {
         public Guid IDEmployee { get; set; }
+
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
+
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
 
         [DisplayName("Employee")]
@@ -21,12 +25,13 @@ namespace EmployeesVacations.Models
         public Guid IDTeam { get; set; }
         public string TeamName { get; set; }
 
+
         [DisplayName("Business Unit")]
         public Guid IDBusinessUnit { get; set; }
         public string BusinessUnitName { get; set; }
 
-        [DisplayName("Hiring Date")]
 
+        [DisplayName("Hiring Date")]
         public DateTime HiringDate { get; set; }
 
         [DisplayName("Total Days Off")]

@@ -68,7 +68,7 @@ namespace EmployeesVacations.Repositories
         public List<EmployeeModel> GetAllEmployeesWherePositionIsBusinessUnitManager()
         {
             List<EmployeeModel> allBusinessUnitsManagersList = new List<EmployeeModel>();
-            foreach (Employee dbEmployee in dbContext.Employees.Where(x => x.Position == 0))
+            foreach (Employee dbEmployee in dbContext.Employees.Where(x => x.Position == (int)PositionEnum.BusinessUnitManager))
             {
                 allBusinessUnitsManagersList.Add(MapDbObjectToModel(dbEmployee));
             }
@@ -77,7 +77,7 @@ namespace EmployeesVacations.Repositories
         public List<EmployeeModel> GetAllEmployeesWherePositionIsTeamLead()
         {
             List<EmployeeModel> allTeamLeadsList = new List<EmployeeModel>();
-            foreach (Employee dbEmployee in dbContext.Employees.Where(x => x.Position == 1))
+            foreach (Employee dbEmployee in dbContext.Employees.Where(x => x.Position == (int)PositionEnum.TeamLead))
             {
                 allTeamLeadsList.Add(MapDbObjectToModel(dbEmployee));
             }

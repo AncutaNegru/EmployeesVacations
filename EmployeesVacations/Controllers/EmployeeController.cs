@@ -13,6 +13,8 @@ namespace EmployeesVacations.Controllers
         private EmployeeRepository employeeRepository = new EmployeeRepository();
         private BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository();
         private TeamRepository teamRepository = new TeamRepository();
+        private VacationRequestRepository vacationRequestRepository = new VacationRequestRepository();
+
         // GET: Employee
         public ActionResult Index()
         {
@@ -120,6 +122,11 @@ namespace EmployeesVacations.Controllers
         {
             try
             {
+                List<VacationRequestModel> allVacationsByEmployeeId = vacationRequestRepository.GetAllVacationRequestsByEmployeeId(id);
+                foreach(VacationRequestModel request in allVacationsByEmployeeId)
+                {
+                    vacationRequestRepository.DeleteVacationRequest(request.IDVacationRequest);
+                }
                 employeeRepository.DeleteEmployee(id);
                 return RedirectToAction("Index");
             }

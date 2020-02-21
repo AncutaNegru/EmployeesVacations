@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,7 +9,30 @@ namespace EmployeesVacations.Models
 {
     public enum PositionEnum
     {
-        BusinessUnitManager=0, TeamLead=1, RecruitmentSpecialist=2,
-        BusinessAnalyst=3, Developer=4, OrderAdministrator=5, Buyer=6, ProjectEngineer=7, ProposalEngineer=8
+        [Display(Name = "Business Unit Manager")]
+        BusinessUnitManager = 1,
+
+        [Display(Name = "Team Lead")]
+        TeamLead = 2,
+
+        [Display(Name = "Recruitment Specialist")]
+        RecruitmentSpecialist = 3,
+
+        [Display(Name = "Business Analyst")]
+        BusinessAnalyst =4,
+
+        Developer = 5,
+
+        [Display(Name = "Order Administrator")]
+        OrderAdministrator =6,
+
+        Buyer =7,
+
+        [Display(Name = "Project Engineer")]
+        ProjectEngineer =8,
+
+        [Display(Name = "Proposal Engineer")]
+        ProposalEngineer = 9
+
     }
 }
