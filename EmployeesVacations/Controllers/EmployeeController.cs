@@ -127,6 +127,10 @@ namespace EmployeesVacations.Controllers
                 {
                     vacationRequestRepository.DeleteVacationRequest(request.IDVacationRequest);
                 }
+                if(employeeRepository.IsTeamLead(id) == true)
+                {
+                    teamRepository.UpdateTeamsIfTeamLeadDeleted(id);
+                }
                 employeeRepository.DeleteEmployee(id);
                 return RedirectToAction("Index");
             }

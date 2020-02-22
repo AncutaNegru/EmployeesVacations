@@ -85,6 +85,16 @@ namespace EmployeesVacations.Repositories
                 dbContext.SubmitChanges();
             }
         }
+
+        public void UpdateTeamsIfTeamLeadDeleted(Guid id)
+        {
+            List<Team> dbTeams = dbContext.Teams.Where(x => x.IDTeamLead == id).ToList();
+            foreach(Team dbTeam in dbTeams)
+            {
+                dbTeam.IDTeamLead = null;
+                dbContext.SubmitChanges();
+            }
+        }
         public void DeleteTeam(Guid id)
         {
             Team dbTeamToDelete = dbContext.Teams.FirstOrDefault(x => x.IDTeam == id);

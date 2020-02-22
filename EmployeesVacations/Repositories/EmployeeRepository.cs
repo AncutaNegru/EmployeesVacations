@@ -121,5 +121,15 @@ namespace EmployeesVacations.Repositories
             }
         }
 
+        public bool IsTeamLead(Guid id)
+        {
+            Employee dbEmployee = dbContext.Employees.FirstOrDefault(x => x.IDEmployee == id);
+            if(dbEmployee != null && dbEmployee.Position == (int)PositionEnum.TeamLead)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }
