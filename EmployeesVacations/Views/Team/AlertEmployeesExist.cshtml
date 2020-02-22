@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "AlertEmployeesExist";
+}
+
+<h2>Team Cannot Be Deleted!</h2>
+
+<div>
+    @Html.Raw(TempData["alertMessage"])
+</div>
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

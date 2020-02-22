@@ -88,6 +88,17 @@ namespace EmployeesVacations.Repositories
             EmployeeModel employeeModel = MapDbObjectToModel(dbContext.Employees.FirstOrDefault(x => x.IDEmployee == id));
             return employeeModel;
         }
+
+        public List<EmployeeModel> GetAllEmployeesByTeamId(Guid idTeam)
+        {
+            List<EmployeeModel> allEmployeesInTeam = new List<EmployeeModel>();
+            List<Employee> dbEmployeesInTeam = dbContext.Employees.Where(x => x.IDTeam == idTeam).ToList();
+            foreach(Employee dbEmployee in dbEmployeesInTeam)
+            {
+                allEmployeesInTeam.Add(MapDbObjectToModel(dbEmployee));
+            }
+            return allEmployeesInTeam;
+        }
         public void InsertEmployee(EmployeeModel employeeModel)
         {
             employeeModel.IDEmployee = Guid.NewGuid();

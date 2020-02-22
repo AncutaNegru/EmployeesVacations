@@ -13,6 +13,7 @@ namespace EmployeesVacations.Controllers
         private TeamRepository teamRepository = new TeamRepository();
         private BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository();
         private EmployeeRepository employeeRepository = new EmployeeRepository();
+
         // GET: Team
         public ActionResult Index()
         {
@@ -99,13 +100,25 @@ namespace EmployeesVacations.Controllers
         {
             try
             {
-                teamRepository.DeleteTeam(id);
-                return RedirectToAction("Index");
+                List<EmployeeModel> employeesInTeam = employeeRepository.GetAllEmployeesByTeamId(id);
+                bool check = !employeesInTeam.Any();
+                if(check)
+                {
+                    teamRepository.DeleteTeam(id);
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("AlertEmployeesExist");
             }
             catch
             {
                 return View("DeleteTeam");
             }
+        }
+
+        public ActionResult AlertEmployeesExist()
+        {
+            TempData["alertMessage"] = "Please delete all employees in the team or reassign them to a different team before deleting the entire team!";
+            return View();
         }
     }
 }

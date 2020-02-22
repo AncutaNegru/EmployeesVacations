@@ -301,6 +301,7 @@
     <Content Include="Views\VacationRequest\CreateVacationRequest.cshtml" />
     <Content Include="Views\VacationRequest\EditVacationRequest.cshtml" />
     <Content Include="Views\VacationRequest\DeleteVacationRequest.cshtml" />
+    <Content Include="Views\Team\AlertEmployeesExist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
