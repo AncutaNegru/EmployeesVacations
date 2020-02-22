@@ -12,6 +12,8 @@ namespace EmployeesVacations.Controllers
     {
         private BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository();
         private EmployeeRepository employeeRepository = new EmployeeRepository();
+        private TeamRepository teamRepository = new TeamRepository();
+
         // GET: BusinessUnit
         public ActionResult Index()
         {
@@ -93,13 +95,27 @@ namespace EmployeesVacations.Controllers
         {
             try
             {
-                businessUnitRepository.DeleteBusinessUnit(id);
-                return RedirectToAction("Index");
+                List<TeamModel> teamsInBusinessUnit = teamRepository.GetAllTeamsByBusinessUnitID(id);
+                List<EmployeeModel> employeesInBusinessUnit = employeeRepository.GetAllEmployeesByBusinessUnitId(id);
+                bool checkTeams = !teamsInBusinessUnit.Any();
+                bool checkEmployees = !employeesInBusinessUnit.Any();
+                if (checkTeams && checkEmployees)
+                {
+                    businessUnitRepository.DeleteBusinessUnit(id);
+                    return RedirectToAction("Index");
+                } 
+                return RedirectToAction("AlertTeamsAndEmployeesExist");
             }
             catch
             {
                 return View("DeleteBusinessUnit");
             }
+        }
+
+        public ActionResult AlertTeamsAndEmployeesExist()
+        {
+            TempData["alertMessage"] = "Please delete all teams and employees in the business unit or reassign them to a different business unit (both teams and employees) before deleting the entire business unit!";
+            return View();
         }
     }
 }

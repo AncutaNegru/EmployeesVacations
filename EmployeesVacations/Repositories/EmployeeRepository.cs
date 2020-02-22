@@ -99,6 +99,18 @@ namespace EmployeesVacations.Repositories
             }
             return allEmployeesInTeam;
         }
+
+        public List<EmployeeModel> GetAllEmployeesByBusinessUnitId(Guid idBusinessUnit)
+        {
+            List<EmployeeModel> allEmployeesInBusinessUnit= new List<EmployeeModel>();
+            List<Employee> dbEmployeesInBusinessUnit = dbContext.Employees.Where(x => x.IDBusinessUnit == idBusinessUnit).ToList();
+            foreach (Employee dbEmployee in dbEmployeesInBusinessUnit)
+            {
+                allEmployeesInBusinessUnit.Add(MapDbObjectToModel(dbEmployee));
+            }
+            return allEmployeesInBusinessUnit;
+        }
+
         public void InsertEmployee(EmployeeModel employeeModel)
         {
             employeeModel.IDEmployee = Guid.NewGuid();
