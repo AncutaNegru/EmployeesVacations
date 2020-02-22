@@ -26,6 +26,10 @@ namespace EmployeesVacations.Repositories
                 businessUnitModel.IDBusinessUnit = dbBusinessUnit.IDBusinessUnit;
                 businessUnitModel.Name = dbBusinessUnit.Name;
                 businessUnitModel.IDBusinessUnitManager = dbBusinessUnit.IDBusinessUnitManager;
+                if (dbBusinessUnit.Employee != null)
+                {
+                    businessUnitModel.BusinessUnitManagerName = dbBusinessUnit.Employee.FirstName + " " + dbBusinessUnit.Employee.LastName;
+                }
                 return businessUnitModel;
             }
             return null;

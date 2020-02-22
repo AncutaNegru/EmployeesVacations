@@ -27,6 +27,10 @@ namespace EmployeesVacations.Repositories
                 teamModel.IDBusinessUnit = dbTeam.IDBusinessUnit;
                 teamModel.Name = dbTeam.Name;
                 teamModel.IDTeamLead = dbTeam.IDTeamLead;
+                if (dbTeam.Employee != null)
+                {
+                    teamModel.TeamLeadName = dbTeam.Employee.FirstName + " " + dbTeam.Employee.LastName;
+                }
                 return teamModel;
             }
             return null;

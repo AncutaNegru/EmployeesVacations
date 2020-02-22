@@ -13,5 +13,8 @@ namespace EmployeesVacations.Models
         [DisplayName("Business Unit")]
         public string Name { get; set; }
         public Guid? IDBusinessUnitManager { get; set; }
+
+        [DisplayName("Business Unit Manager")]
+        public string BusinessUnitManagerName { get; set; }
     }
 }
