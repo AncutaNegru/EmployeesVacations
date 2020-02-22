@@ -10,6 +10,11 @@ namespace EmployeesVacations.Models
     {
         public Guid IDTeam { get; set; }
         public Guid IDBusinessUnit { get; set; }
+
+        [DisplayName("Business Unit")]
+        public string BusinessUnitName { get; set; }
+
+        [DisplayName("Team")]
         public string Name { get; set; }
         public Guid? IDTeamLead { get; set; }
 

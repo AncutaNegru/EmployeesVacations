@@ -25,6 +25,7 @@ namespace EmployeesVacations.Repositories
             {
                 teamModel.IDTeam = dbTeam.IDTeam;
                 teamModel.IDBusinessUnit = dbTeam.IDBusinessUnit;
+                teamModel.BusinessUnitName = dbTeam.BusinessUnit.Name;
                 teamModel.Name = dbTeam.Name;
                 teamModel.IDTeamLead = dbTeam.IDTeamLead;
                 if (dbTeam.Employee != null)

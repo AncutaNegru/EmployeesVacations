@@ -27,37 +27,48 @@
             @Html.DisplayNameFor(model => model.DaysRequested)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.FirstApproval)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SecondApproval)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Status)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.EmployeeFullName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Reason)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.StartDate)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EndDate)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.DaysRequested)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Status)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.IDVacationRequest }) |
-        @Html.ActionLink("Details", "Details", new { id = item.IDVacationRequest }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.IDVacationRequest })
-    </td>
-</tr>
-}
-
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysRequested)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstApproval)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecondApproval)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IDVacationRequest }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IDVacationRequest }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IDVacationRequest })
+            </td>
+        </tr>
+     }
 </table>
