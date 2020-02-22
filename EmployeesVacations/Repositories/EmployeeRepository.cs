@@ -122,6 +122,7 @@ namespace EmployeesVacations.Repositories
                 dbContext.SubmitChanges();
             }
         }
+
         public void DeleteEmployee(Guid id)
         {
             Employee dbEmployeeToDelete = dbContext.Employees.FirstOrDefault(x => x.IDEmployee == id);
@@ -142,5 +143,14 @@ namespace EmployeesVacations.Repositories
             return false;
         }
 
+        public bool IsBusinessUnitManager(Guid id)
+        {
+            Employee dbEmployee = dbContext.Employees.FirstOrDefault(x => x.IDEmployee == id);
+            if (dbEmployee != null && dbEmployee.Position == (int)PositionEnum.BusinessUnitManager)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

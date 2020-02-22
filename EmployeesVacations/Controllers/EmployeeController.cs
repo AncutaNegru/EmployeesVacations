@@ -131,6 +131,10 @@ namespace EmployeesVacations.Controllers
                 {
                     teamRepository.UpdateTeamsIfTeamLeadDeleted(id);
                 }
+                if (employeeRepository.IsBusinessUnitManager(id) == true)
+                {
+                    businessUnitRepository.UpdateBusinessUnitsIfManagerIsDeleted(id);
+                }
                 employeeRepository.DeleteEmployee(id);
                 return RedirectToAction("Index");
             }

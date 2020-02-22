@@ -73,6 +73,16 @@ namespace EmployeesVacations.Repositories
                 dbContext.SubmitChanges();
             }
         }
+
+        public void UpdateBusinessUnitsIfManagerIsDeleted(Guid id)
+        {
+            List<BusinessUnit> dbBusinessUnits = dbContext.BusinessUnits.Where(x => x.IDBusinessUnitManager == id).ToList();
+            foreach (BusinessUnit dbBusinessUnit in dbBusinessUnits)
+            {
+                dbBusinessUnit.IDBusinessUnitManager = null;
+                dbContext.SubmitChanges();
+            }
+        }
         public void DeleteBusinessUnit(Guid id)
         {
             BusinessUnit dbBusinessUnitToDelete = dbContext.BusinessUnits.FirstOrDefault(x => x.IDBusinessUnit == id);
