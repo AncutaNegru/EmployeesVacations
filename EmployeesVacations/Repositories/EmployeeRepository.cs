@@ -34,6 +34,7 @@ namespace EmployeesVacations.Repositories
                 employeeModel.HiringDate = dbEmployee.HiringDate;
                 employeeModel.TotalDaysOff = dbEmployee.TotalDaysOff;
                 employeeModel.DaysOffLeft = dbEmployee.DaysOffLeft;
+                employeeModel.IDUser = dbEmployee.IDUser;
                 return employeeModel;
             }
             return null;
@@ -52,6 +53,7 @@ namespace EmployeesVacations.Repositories
                 dbEmployee.HiringDate = employeeModel.HiringDate;
                 dbEmployee.TotalDaysOff = employeeModel.TotalDaysOff;
                 dbEmployee.DaysOffLeft = employeeModel.DaysOffLeft;
+                dbEmployee.IDUser = employeeModel.IDUser;
                 return dbEmployee;
             }
             return null;

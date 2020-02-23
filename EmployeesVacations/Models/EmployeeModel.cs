@@ -45,5 +45,7 @@ namespace EmployeesVacations.Models
 
         [DisplayName("Days Off Remaining")]
         public int DaysOffLeft { get; set; }
+
+        public string IDUser { get; set; }
     }
 }

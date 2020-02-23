@@ -33,15 +33,15 @@ namespace EmployeesVacations.Models.DBObjects
     partial void InsertBusinessUnit(BusinessUnit instance);
     partial void UpdateBusinessUnit(BusinessUnit instance);
     partial void DeleteBusinessUnit(BusinessUnit instance);
-    partial void InsertEmployee(Employee instance);
-    partial void UpdateEmployee(Employee instance);
-    partial void DeleteEmployee(Employee instance);
     partial void InsertTeam(Team instance);
     partial void UpdateTeam(Team instance);
     partial void DeleteTeam(Team instance);
     partial void InsertVacationRequest(VacationRequest instance);
     partial void UpdateVacationRequest(VacationRequest instance);
     partial void DeleteVacationRequest(VacationRequest instance);
+    partial void InsertEmployee(Employee instance);
+    partial void UpdateEmployee(Employee instance);
+    partial void DeleteEmployee(Employee instance);
     #endregion
 		
 		public EmployeesAndVacationsModelsDataContext() : 
@@ -82,14 +82,6 @@ namespace EmployeesVacations.Models.DBObjects
 			}
 		}
 		
-		public System.Data.Linq.Table<Employee> Employees
-		{
-			get
-			{
-				return this.GetTable<Employee>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Team> Teams
 		{
 			get
@@ -103,6 +95,14 @@ namespace EmployeesVacations.Models.DBObjects
 			get
 			{
 				return this.GetTable<VacationRequest>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Employee> Employees
+		{
+			get
+			{
+				return this.GetTable<Employee>();
 			}
 		}
 	}
@@ -119,9 +119,9 @@ namespace EmployeesVacations.Models.DBObjects
 		
 		private System.Nullable<System.Guid> _IDBusinessUnitManager;
 		
-		private EntitySet<Employee> _Employees;
-		
 		private EntitySet<Team> _Teams;
+		
+		private EntitySet<Employee> _Employees;
 		
 		private EntityRef<Employee> _Employee;
 		
@@ -139,8 +139,8 @@ namespace EmployeesVacations.Models.DBObjects
 		
 		public BusinessUnit()
 		{
-			this._Employees = new EntitySet<Employee>(new Action<Employee>(this.attach_Employees), new Action<Employee>(this.detach_Employees));
 			this._Teams = new EntitySet<Team>(new Action<Team>(this.attach_Teams), new Action<Team>(this.detach_Teams));
+			this._Employees = new EntitySet<Employee>(new Action<Employee>(this.attach_Employees), new Action<Employee>(this.detach_Employees));
 			this._Employee = default(EntityRef<Employee>);
 			OnCreated();
 		}
@@ -209,19 +209,6 @@ namespace EmployeesVacations.Models.DBObjects
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BusinessUnit_Employee", Storage="_Employees", ThisKey="IDBusinessUnit", OtherKey="IDBusinessUnit")]
-		public EntitySet<Employee> Employees
-		{
-			get
-			{
-				return this._Employees;
-			}
-			set
-			{
-				this._Employees.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BusinessUnit_Team", Storage="_Teams", ThisKey="IDBusinessUnit", OtherKey="IDBusinessUnit")]
 		public EntitySet<Team> Teams
 		{
@@ -232,6 +219,19 @@ namespace EmployeesVacations.Models.DBObjects
 			set
 			{
 				this._Teams.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BusinessUnit_Employee", Storage="_Employees", ThisKey="IDBusinessUnit", OtherKey="IDBusinessUnit")]
+		public EntitySet<Employee> Employees
+		{
+			get
+			{
+				return this._Employees;
+			}
+			set
+			{
+				this._Employees.Assign(value);
 			}
 		}
 		
@@ -289,6 +289,18 @@ namespace EmployeesVacations.Models.DBObjects
 			}
 		}
 		
+		private void attach_Teams(Team entity)
+		{
+			this.SendPropertyChanging();
+			entity.BusinessUnit = this;
+		}
+		
+		private void detach_Teams(Team entity)
+		{
+			this.SendPropertyChanging();
+			entity.BusinessUnit = null;
+		}
+		
 		private void attach_Employees(Employee entity)
 		{
 			this.SendPropertyChanging();
@@ -299,438 +311,6 @@ namespace EmployeesVacations.Models.DBObjects
 		{
 			this.SendPropertyChanging();
 			entity.BusinessUnit = null;
-		}
-		
-		private void attach_Teams(Team entity)
-		{
-			this.SendPropertyChanging();
-			entity.BusinessUnit = this;
-		}
-		
-		private void detach_Teams(Team entity)
-		{
-			this.SendPropertyChanging();
-			entity.BusinessUnit = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employees")]
-	public partial class Employee : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private System.Guid _IDEmployee;
-		
-		private string _FirstName;
-		
-		private string _LastName;
-		
-		private int _Position;
-		
-		private System.Guid _IDTeam;
-		
-		private System.Guid _IDBusinessUnit;
-		
-		private System.DateTime _HiringDate;
-		
-		private int _TotalDaysOff;
-		
-		private int _DaysOffLeft;
-		
-		private EntitySet<BusinessUnit> _BusinessUnits;
-		
-		private EntitySet<Team> _Teams;
-		
-		private EntitySet<VacationRequest> _VacationRequests;
-		
-		private EntityRef<BusinessUnit> _BusinessUnit;
-		
-		private EntityRef<Team> _Team;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDEmployeeChanging(System.Guid value);
-    partial void OnIDEmployeeChanged();
-    partial void OnFirstNameChanging(string value);
-    partial void OnFirstNameChanged();
-    partial void OnLastNameChanging(string value);
-    partial void OnLastNameChanged();
-    partial void OnPositionChanging(int value);
-    partial void OnPositionChanged();
-    partial void OnIDTeamChanging(System.Guid value);
-    partial void OnIDTeamChanged();
-    partial void OnIDBusinessUnitChanging(System.Guid value);
-    partial void OnIDBusinessUnitChanged();
-    partial void OnHiringDateChanging(System.DateTime value);
-    partial void OnHiringDateChanged();
-    partial void OnTotalDaysOffChanging(int value);
-    partial void OnTotalDaysOffChanged();
-    partial void OnDaysOffLeftChanging(int value);
-    partial void OnDaysOffLeftChanged();
-    #endregion
-		
-		public Employee()
-		{
-			this._BusinessUnits = new EntitySet<BusinessUnit>(new Action<BusinessUnit>(this.attach_BusinessUnits), new Action<BusinessUnit>(this.detach_BusinessUnits));
-			this._Teams = new EntitySet<Team>(new Action<Team>(this.attach_Teams), new Action<Team>(this.detach_Teams));
-			this._VacationRequests = new EntitySet<VacationRequest>(new Action<VacationRequest>(this.attach_VacationRequests), new Action<VacationRequest>(this.detach_VacationRequests));
-			this._BusinessUnit = default(EntityRef<BusinessUnit>);
-			this._Team = default(EntityRef<Team>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDEmployee", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
-		public System.Guid IDEmployee
-		{
-			get
-			{
-				return this._IDEmployee;
-			}
-			set
-			{
-				if ((this._IDEmployee != value))
-				{
-					this.OnIDEmployeeChanging(value);
-					this.SendPropertyChanging();
-					this._IDEmployee = value;
-					this.SendPropertyChanged("IDEmployee");
-					this.OnIDEmployeeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
-		public string FirstName
-		{
-			get
-			{
-				return this._FirstName;
-			}
-			set
-			{
-				if ((this._FirstName != value))
-				{
-					this.OnFirstNameChanging(value);
-					this.SendPropertyChanging();
-					this._FirstName = value;
-					this.SendPropertyChanged("FirstName");
-					this.OnFirstNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
-		public string LastName
-		{
-			get
-			{
-				return this._LastName;
-			}
-			set
-			{
-				if ((this._LastName != value))
-				{
-					this.OnLastNameChanging(value);
-					this.SendPropertyChanging();
-					this._LastName = value;
-					this.SendPropertyChanged("LastName");
-					this.OnLastNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Position", DbType="Int NOT NULL")]
-		public int Position
-		{
-			get
-			{
-				return this._Position;
-			}
-			set
-			{
-				if ((this._Position != value))
-				{
-					this.OnPositionChanging(value);
-					this.SendPropertyChanging();
-					this._Position = value;
-					this.SendPropertyChanged("Position");
-					this.OnPositionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDTeam", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid IDTeam
-		{
-			get
-			{
-				return this._IDTeam;
-			}
-			set
-			{
-				if ((this._IDTeam != value))
-				{
-					if (this._Team.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIDTeamChanging(value);
-					this.SendPropertyChanging();
-					this._IDTeam = value;
-					this.SendPropertyChanged("IDTeam");
-					this.OnIDTeamChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDBusinessUnit", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid IDBusinessUnit
-		{
-			get
-			{
-				return this._IDBusinessUnit;
-			}
-			set
-			{
-				if ((this._IDBusinessUnit != value))
-				{
-					if (this._BusinessUnit.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIDBusinessUnitChanging(value);
-					this.SendPropertyChanging();
-					this._IDBusinessUnit = value;
-					this.SendPropertyChanged("IDBusinessUnit");
-					this.OnIDBusinessUnitChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HiringDate", DbType="DateTime NOT NULL")]
-		public System.DateTime HiringDate
-		{
-			get
-			{
-				return this._HiringDate;
-			}
-			set
-			{
-				if ((this._HiringDate != value))
-				{
-					this.OnHiringDateChanging(value);
-					this.SendPropertyChanging();
-					this._HiringDate = value;
-					this.SendPropertyChanged("HiringDate");
-					this.OnHiringDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalDaysOff", DbType="Int NOT NULL")]
-		public int TotalDaysOff
-		{
-			get
-			{
-				return this._TotalDaysOff;
-			}
-			set
-			{
-				if ((this._TotalDaysOff != value))
-				{
-					this.OnTotalDaysOffChanging(value);
-					this.SendPropertyChanging();
-					this._TotalDaysOff = value;
-					this.SendPropertyChanged("TotalDaysOff");
-					this.OnTotalDaysOffChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DaysOffLeft", DbType="Int NOT NULL")]
-		public int DaysOffLeft
-		{
-			get
-			{
-				return this._DaysOffLeft;
-			}
-			set
-			{
-				if ((this._DaysOffLeft != value))
-				{
-					this.OnDaysOffLeftChanging(value);
-					this.SendPropertyChanging();
-					this._DaysOffLeft = value;
-					this.SendPropertyChanged("DaysOffLeft");
-					this.OnDaysOffLeftChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_BusinessUnit", Storage="_BusinessUnits", ThisKey="IDEmployee", OtherKey="IDBusinessUnitManager")]
-		public EntitySet<BusinessUnit> BusinessUnits
-		{
-			get
-			{
-				return this._BusinessUnits;
-			}
-			set
-			{
-				this._BusinessUnits.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Team", Storage="_Teams", ThisKey="IDEmployee", OtherKey="IDTeamLead")]
-		public EntitySet<Team> Teams
-		{
-			get
-			{
-				return this._Teams;
-			}
-			set
-			{
-				this._Teams.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_VacationRequest", Storage="_VacationRequests", ThisKey="IDEmployee", OtherKey="IDEmployee")]
-		public EntitySet<VacationRequest> VacationRequests
-		{
-			get
-			{
-				return this._VacationRequests;
-			}
-			set
-			{
-				this._VacationRequests.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BusinessUnit_Employee", Storage="_BusinessUnit", ThisKey="IDBusinessUnit", OtherKey="IDBusinessUnit", IsForeignKey=true)]
-		public BusinessUnit BusinessUnit
-		{
-			get
-			{
-				return this._BusinessUnit.Entity;
-			}
-			set
-			{
-				BusinessUnit previousValue = this._BusinessUnit.Entity;
-				if (((previousValue != value) 
-							|| (this._BusinessUnit.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._BusinessUnit.Entity = null;
-						previousValue.Employees.Remove(this);
-					}
-					this._BusinessUnit.Entity = value;
-					if ((value != null))
-					{
-						value.Employees.Add(this);
-						this._IDBusinessUnit = value.IDBusinessUnit;
-					}
-					else
-					{
-						this._IDBusinessUnit = default(System.Guid);
-					}
-					this.SendPropertyChanged("BusinessUnit");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Team_Employee", Storage="_Team", ThisKey="IDTeam", OtherKey="IDTeam", IsForeignKey=true)]
-		public Team Team
-		{
-			get
-			{
-				return this._Team.Entity;
-			}
-			set
-			{
-				Team previousValue = this._Team.Entity;
-				if (((previousValue != value) 
-							|| (this._Team.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Team.Entity = null;
-						previousValue.Employees.Remove(this);
-					}
-					this._Team.Entity = value;
-					if ((value != null))
-					{
-						value.Employees.Add(this);
-						this._IDTeam = value.IDTeam;
-					}
-					else
-					{
-						this._IDTeam = default(System.Guid);
-					}
-					this.SendPropertyChanged("Team");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_BusinessUnits(BusinessUnit entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee = this;
-		}
-		
-		private void detach_BusinessUnits(BusinessUnit entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee = null;
-		}
-		
-		private void attach_Teams(Team entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee = this;
-		}
-		
-		private void detach_Teams(Team entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee = null;
-		}
-		
-		private void attach_VacationRequests(VacationRequest entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee = this;
-		}
-		
-		private void detach_VacationRequests(VacationRequest entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee = null;
 		}
 	}
 	
@@ -1270,6 +850,450 @@ namespace EmployeesVacations.Models.DBObjects
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employees")]
+	public partial class Employee : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _IDEmployee;
+		
+		private string _FirstName;
+		
+		private string _LastName;
+		
+		private int _Position;
+		
+		private System.Guid _IDTeam;
+		
+		private System.Guid _IDBusinessUnit;
+		
+		private System.DateTime _HiringDate;
+		
+		private int _TotalDaysOff;
+		
+		private int _DaysOffLeft;
+		
+		private string _IDUser;
+		
+		private EntitySet<BusinessUnit> _BusinessUnits;
+		
+		private EntitySet<Team> _Teams;
+		
+		private EntitySet<VacationRequest> _VacationRequests;
+		
+		private EntityRef<BusinessUnit> _BusinessUnit;
+		
+		private EntityRef<Team> _Team;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDEmployeeChanging(System.Guid value);
+    partial void OnIDEmployeeChanged();
+    partial void OnFirstNameChanging(string value);
+    partial void OnFirstNameChanged();
+    partial void OnLastNameChanging(string value);
+    partial void OnLastNameChanged();
+    partial void OnPositionChanging(int value);
+    partial void OnPositionChanged();
+    partial void OnIDTeamChanging(System.Guid value);
+    partial void OnIDTeamChanged();
+    partial void OnIDBusinessUnitChanging(System.Guid value);
+    partial void OnIDBusinessUnitChanged();
+    partial void OnHiringDateChanging(System.DateTime value);
+    partial void OnHiringDateChanged();
+    partial void OnTotalDaysOffChanging(int value);
+    partial void OnTotalDaysOffChanged();
+    partial void OnDaysOffLeftChanging(int value);
+    partial void OnDaysOffLeftChanged();
+    partial void OnIDUserChanging(string value);
+    partial void OnIDUserChanged();
+    #endregion
+		
+		public Employee()
+		{
+			this._BusinessUnits = new EntitySet<BusinessUnit>(new Action<BusinessUnit>(this.attach_BusinessUnits), new Action<BusinessUnit>(this.detach_BusinessUnits));
+			this._Teams = new EntitySet<Team>(new Action<Team>(this.attach_Teams), new Action<Team>(this.detach_Teams));
+			this._VacationRequests = new EntitySet<VacationRequest>(new Action<VacationRequest>(this.attach_VacationRequests), new Action<VacationRequest>(this.detach_VacationRequests));
+			this._BusinessUnit = default(EntityRef<BusinessUnit>);
+			this._Team = default(EntityRef<Team>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDEmployee", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+		public System.Guid IDEmployee
+		{
+			get
+			{
+				return this._IDEmployee;
+			}
+			set
+			{
+				if ((this._IDEmployee != value))
+				{
+					this.OnIDEmployeeChanging(value);
+					this.SendPropertyChanging();
+					this._IDEmployee = value;
+					this.SendPropertyChanged("IDEmployee");
+					this.OnIDEmployeeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FirstName", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
+		public string FirstName
+		{
+			get
+			{
+				return this._FirstName;
+			}
+			set
+			{
+				if ((this._FirstName != value))
+				{
+					this.OnFirstNameChanging(value);
+					this.SendPropertyChanging();
+					this._FirstName = value;
+					this.SendPropertyChanged("FirstName");
+					this.OnFirstNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastName", DbType="VarChar(250) NOT NULL", CanBeNull=false)]
+		public string LastName
+		{
+			get
+			{
+				return this._LastName;
+			}
+			set
+			{
+				if ((this._LastName != value))
+				{
+					this.OnLastNameChanging(value);
+					this.SendPropertyChanging();
+					this._LastName = value;
+					this.SendPropertyChanged("LastName");
+					this.OnLastNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Position", DbType="Int NOT NULL")]
+		public int Position
+		{
+			get
+			{
+				return this._Position;
+			}
+			set
+			{
+				if ((this._Position != value))
+				{
+					this.OnPositionChanging(value);
+					this.SendPropertyChanging();
+					this._Position = value;
+					this.SendPropertyChanged("Position");
+					this.OnPositionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDTeam", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid IDTeam
+		{
+			get
+			{
+				return this._IDTeam;
+			}
+			set
+			{
+				if ((this._IDTeam != value))
+				{
+					if (this._Team.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIDTeamChanging(value);
+					this.SendPropertyChanging();
+					this._IDTeam = value;
+					this.SendPropertyChanged("IDTeam");
+					this.OnIDTeamChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDBusinessUnit", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid IDBusinessUnit
+		{
+			get
+			{
+				return this._IDBusinessUnit;
+			}
+			set
+			{
+				if ((this._IDBusinessUnit != value))
+				{
+					if (this._BusinessUnit.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnIDBusinessUnitChanging(value);
+					this.SendPropertyChanging();
+					this._IDBusinessUnit = value;
+					this.SendPropertyChanged("IDBusinessUnit");
+					this.OnIDBusinessUnitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HiringDate", DbType="DateTime NOT NULL")]
+		public System.DateTime HiringDate
+		{
+			get
+			{
+				return this._HiringDate;
+			}
+			set
+			{
+				if ((this._HiringDate != value))
+				{
+					this.OnHiringDateChanging(value);
+					this.SendPropertyChanging();
+					this._HiringDate = value;
+					this.SendPropertyChanged("HiringDate");
+					this.OnHiringDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalDaysOff", DbType="Int NOT NULL")]
+		public int TotalDaysOff
+		{
+			get
+			{
+				return this._TotalDaysOff;
+			}
+			set
+			{
+				if ((this._TotalDaysOff != value))
+				{
+					this.OnTotalDaysOffChanging(value);
+					this.SendPropertyChanging();
+					this._TotalDaysOff = value;
+					this.SendPropertyChanged("TotalDaysOff");
+					this.OnTotalDaysOffChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DaysOffLeft", DbType="Int NOT NULL")]
+		public int DaysOffLeft
+		{
+			get
+			{
+				return this._DaysOffLeft;
+			}
+			set
+			{
+				if ((this._DaysOffLeft != value))
+				{
+					this.OnDaysOffLeftChanging(value);
+					this.SendPropertyChanging();
+					this._DaysOffLeft = value;
+					this.SendPropertyChanged("DaysOffLeft");
+					this.OnDaysOffLeftChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IDUser", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
+		public string IDUser
+		{
+			get
+			{
+				return this._IDUser;
+			}
+			set
+			{
+				if ((this._IDUser != value))
+				{
+					this.OnIDUserChanging(value);
+					this.SendPropertyChanging();
+					this._IDUser = value;
+					this.SendPropertyChanged("IDUser");
+					this.OnIDUserChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_BusinessUnit", Storage="_BusinessUnits", ThisKey="IDEmployee", OtherKey="IDBusinessUnitManager")]
+		public EntitySet<BusinessUnit> BusinessUnits
+		{
+			get
+			{
+				return this._BusinessUnits;
+			}
+			set
+			{
+				this._BusinessUnits.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Team", Storage="_Teams", ThisKey="IDEmployee", OtherKey="IDTeamLead")]
+		public EntitySet<Team> Teams
+		{
+			get
+			{
+				return this._Teams;
+			}
+			set
+			{
+				this._Teams.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_VacationRequest", Storage="_VacationRequests", ThisKey="IDEmployee", OtherKey="IDEmployee")]
+		public EntitySet<VacationRequest> VacationRequests
+		{
+			get
+			{
+				return this._VacationRequests;
+			}
+			set
+			{
+				this._VacationRequests.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="BusinessUnit_Employee", Storage="_BusinessUnit", ThisKey="IDBusinessUnit", OtherKey="IDBusinessUnit", IsForeignKey=true)]
+		public BusinessUnit BusinessUnit
+		{
+			get
+			{
+				return this._BusinessUnit.Entity;
+			}
+			set
+			{
+				BusinessUnit previousValue = this._BusinessUnit.Entity;
+				if (((previousValue != value) 
+							|| (this._BusinessUnit.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._BusinessUnit.Entity = null;
+						previousValue.Employees.Remove(this);
+					}
+					this._BusinessUnit.Entity = value;
+					if ((value != null))
+					{
+						value.Employees.Add(this);
+						this._IDBusinessUnit = value.IDBusinessUnit;
+					}
+					else
+					{
+						this._IDBusinessUnit = default(System.Guid);
+					}
+					this.SendPropertyChanged("BusinessUnit");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Team_Employee", Storage="_Team", ThisKey="IDTeam", OtherKey="IDTeam", IsForeignKey=true)]
+		public Team Team
+		{
+			get
+			{
+				return this._Team.Entity;
+			}
+			set
+			{
+				Team previousValue = this._Team.Entity;
+				if (((previousValue != value) 
+							|| (this._Team.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Team.Entity = null;
+						previousValue.Employees.Remove(this);
+					}
+					this._Team.Entity = value;
+					if ((value != null))
+					{
+						value.Employees.Add(this);
+						this._IDTeam = value.IDTeam;
+					}
+					else
+					{
+						this._IDTeam = default(System.Guid);
+					}
+					this.SendPropertyChanged("Team");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_BusinessUnits(BusinessUnit entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee = this;
+		}
+		
+		private void detach_BusinessUnits(BusinessUnit entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee = null;
+		}
+		
+		private void attach_Teams(Team entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee = this;
+		}
+		
+		private void detach_Teams(Team entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee = null;
+		}
+		
+		private void attach_VacationRequests(VacationRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee = this;
+		}
+		
+		private void detach_VacationRequests(VacationRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee = null;
 		}
 	}
 }

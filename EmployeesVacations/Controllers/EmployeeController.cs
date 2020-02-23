@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using EmployeesVacations.Models;
 using EmployeesVacations.Repositories;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace EmployeesVacations.Controllers
 {
@@ -52,7 +53,7 @@ namespace EmployeesVacations.Controllers
 
         // POST: Employee/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async System.Threading.Tasks.Task<ActionResult> Create(FormCollection collection)
         {
             var businessUnits = businessUnitRepository.GetAllBusinessUnits();
             SelectList listBusinessUnits = new SelectList(businessUnits, "IDBusinessUnit", "Name");
@@ -64,6 +65,24 @@ namespace EmployeesVacations.Controllers
             {
                 EmployeeModel employeeModel = new EmployeeModel();
                 UpdateModel(employeeModel);
+
+                var user = new ApplicationUser { UserName = employeeModel.FirstName + "." + employeeModel.LastName + "@company.com", Email = employeeModel.FirstName + "." + employeeModel.LastName + "@company.com" };
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var result = await userManager.CreateAsync(user, "Pa$5word");
+                employeeModel.IDUser = user.Id;
+                if(result.Succeeded)
+                {
+                    if(employeeModel.Position == PositionEnum.TeamLead)
+                    {
+                        await userManager.AddToRoleAsync(user.Id, "Lead");
+                    }
+                    else if(employeeModel.Position == PositionEnum.BusinessUnitManager)
+                    {
+                        await userManager.AddToRoleAsync(user.Id, "Manager");
+                    }
+                    else await userManager.AddToRoleAsync(user.Id, "Employee");
+                }
+                
                 employeeRepository.InsertEmployee(employeeModel);
                 return RedirectToAction("Index");
             }

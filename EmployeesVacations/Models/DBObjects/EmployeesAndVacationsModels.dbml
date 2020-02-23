@@ -5,27 +5,9 @@
       <Column Name="IDBusinessUnit" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
       <Column Name="IDBusinessUnitManager" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Association Name="BusinessUnit_Employee" Member="Employees" ThisKey="IDBusinessUnit" OtherKey="IDBusinessUnit" Type="Employee" />
       <Association Name="BusinessUnit_Team" Member="Teams" ThisKey="IDBusinessUnit" OtherKey="IDBusinessUnit" Type="Team" />
+      <Association Name="BusinessUnit_Employee" Member="Employees" ThisKey="IDBusinessUnit" OtherKey="IDBusinessUnit" Type="Employee" />
       <Association Name="Employee_BusinessUnit" Member="Employee" ThisKey="IDBusinessUnitManager" OtherKey="IDEmployee" Type="Employee" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Employees" Member="Employees">
-    <Type Name="Employee">
-      <Column Name="IDEmployee" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="FirstName" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="LastName" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
-      <Column Name="Position" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IDTeam" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="IDBusinessUnit" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="HiringDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="TotalDaysOff" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DaysOffLeft" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Employee_BusinessUnit" Member="BusinessUnits" ThisKey="IDEmployee" OtherKey="IDBusinessUnitManager" Type="BusinessUnit" />
-      <Association Name="Employee_Team" Member="Teams" ThisKey="IDEmployee" OtherKey="IDTeamLead" Type="Team" />
-      <Association Name="Employee_VacationRequest" Member="VacationRequests" ThisKey="IDEmployee" OtherKey="IDEmployee" Type="VacationRequest" />
-      <Association Name="BusinessUnit_Employee" Member="BusinessUnit" ThisKey="IDBusinessUnit" OtherKey="IDBusinessUnit" Type="BusinessUnit" IsForeignKey="true" />
-      <Association Name="Team_Employee" Member="Team" ThisKey="IDTeam" OtherKey="IDTeam" Type="Team" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Teams" Member="Teams">
@@ -51,6 +33,25 @@
       <Column Name="SecondApproval" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Employee_VacationRequest" Member="Employee" ThisKey="IDEmployee" OtherKey="IDEmployee" Type="Employee" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employees" Member="Employees">
+    <Type Name="Employee">
+      <Column Name="IDEmployee" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Position" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDTeam" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="IDBusinessUnit" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="HiringDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TotalDaysOff" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DaysOffLeft" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDUser" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Association Name="Employee_BusinessUnit" Member="BusinessUnits" ThisKey="IDEmployee" OtherKey="IDBusinessUnitManager" Type="BusinessUnit" />
+      <Association Name="Employee_Team" Member="Teams" ThisKey="IDEmployee" OtherKey="IDTeamLead" Type="Team" />
+      <Association Name="Employee_VacationRequest" Member="VacationRequests" ThisKey="IDEmployee" OtherKey="IDEmployee" Type="VacationRequest" />
+      <Association Name="BusinessUnit_Employee" Member="BusinessUnit" ThisKey="IDBusinessUnit" OtherKey="IDBusinessUnit" Type="BusinessUnit" IsForeignKey="true" />
+      <Association Name="Team_Employee" Member="Team" ThisKey="IDTeam" OtherKey="IDTeam" Type="Team" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
