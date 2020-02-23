@@ -62,6 +62,9 @@ namespace EmployeesVacations.Controllers
         public ActionResult Edit(Guid id)
         {
             BusinessUnitModel businessUnitModel = businessUnitRepository.GetBusinessUnitByID(id);
+            var managers = employeeRepository.GetAllEmployeesWherePositionIsBusinessUnitManager();
+            SelectList listmanagers = new SelectList(managers, "IDEmployee", "FullName");
+            ViewData["manager"] = listmanagers;
             return View("EditBusinessUnit", businessUnitModel);
         }
 
@@ -69,6 +72,9 @@ namespace EmployeesVacations.Controllers
         [HttpPost]
         public ActionResult Edit(Guid id, FormCollection collection)
         {
+            var managers = employeeRepository.GetAllEmployeesWherePositionIsBusinessUnitManager();
+            SelectList listmanagers = new SelectList(managers, "IDEmployee", "FullName");
+            ViewData["manager"] = listmanagers;
             try
             {
                 BusinessUnitModel businessUnitModel = new BusinessUnitModel();

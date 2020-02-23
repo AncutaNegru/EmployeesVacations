@@ -67,6 +67,12 @@ namespace EmployeesVacations.Controllers
         public ActionResult Edit(Guid id)
         {
             TeamModel teamModel = teamRepository.GetTeamByID(id);
+            var allBusinessUnits = businessUnitRepository.GetAllBusinessUnits();
+            SelectList listBusinessUnits = new SelectList(allBusinessUnits, "IDBusinessUnit", "Name");
+            ViewData["businessUnit"] = listBusinessUnits;
+            var allTeamLeads = employeeRepository.GetAllEmployeesWherePositionIsTeamLead();
+            SelectList listTeamLeads = new SelectList(allTeamLeads, "IDEmployee", "FullName");
+            ViewData["teamLead"] = listTeamLeads;
             return View("EditTeam", teamModel);
         }
 
@@ -74,6 +80,12 @@ namespace EmployeesVacations.Controllers
         [HttpPost]
         public ActionResult Edit(Guid id, FormCollection collection)
         {
+            var allBusinessUnits = businessUnitRepository.GetAllBusinessUnits();
+            SelectList listBusinessUnits = new SelectList(allBusinessUnits, "IDBusinessUnit", "Name");
+            ViewData["businessUnit"] = listBusinessUnits;
+            var allTeamLeads = employeeRepository.GetAllEmployeesWherePositionIsTeamLead();
+            SelectList listTeamLeads = new SelectList(allTeamLeads, "IDEmployee", "FullName");
+            ViewData["teamLead"] = listTeamLeads;
             try
             {
                 TeamModel teamModel = new TeamModel();
