@@ -4,7 +4,7 @@
     ViewBag.Title = "CreateBusinessUnit";
 }
 
-<h2>CreateBusinessUnit</h2>
+<h2>Create Business Unit</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>BusinessUnitModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         

@@ -4,19 +4,18 @@
     ViewBag.Title = "DetailsTeam";
 }
 
-<h2>DetailsTeam</h2>
+<h2>Details Team</h2>
 
 <div>
-    <h4>TeamModel</h4>
     <hr />
     <dl class="dl-horizontal">
         
         <dt>
-            @Html.DisplayNameFor(model => model.IDBusinessUnit)
+            @Html.DisplayNameFor(model => model.BusinessUnitName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IDBusinessUnit)
+            @Html.DisplayFor(model => model.BusinessUnitName)
         </dd>
 
         <dt>
@@ -28,11 +27,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IDTeamLead)
+            @Html.DisplayNameFor(model => model.TeamLeadName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IDTeamLead)
+            @Html.DisplayFor(model => model.TeamLeadName)
         </dd>
 
     </dl>
