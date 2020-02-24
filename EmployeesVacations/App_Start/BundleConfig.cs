@@ -30,6 +30,10 @@ namespace EmployeesVacations
             bundles.Add(new ScriptBundle("~/bundles/Custom").Include(
                      "~/Scripts/Custom/Employees.js"));
 
+            // Custom Styles
+            bundles.Add(new StyleBundle("~/bundles/Custom").Include(
+                     "~/Content/Custom/main.css"));
+
         }
     }
 }

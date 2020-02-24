@@ -221,6 +221,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Custom\main.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -305,6 +306,7 @@
     <Content Include="Views\BusinessUnit\AlertTeamsAndEmployeesExist.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Custom\Images\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
