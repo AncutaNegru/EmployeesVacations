@@ -72,15 +72,7 @@ namespace EmployeesVacations.Controllers
                 employeeModel.IDUser = user.Id;
                 if(result.Succeeded)
                 {
-                    if(employeeModel.Position == PositionEnum.TeamLead)
-                    {
-                        await userManager.AddToRoleAsync(user.Id, "Lead");
-                    }
-                    else if(employeeModel.Position == PositionEnum.BusinessUnitManager)
-                    {
-                        await userManager.AddToRoleAsync(user.Id, "Manager");
-                    }
-                    else await userManager.AddToRoleAsync(user.Id, "Employee");
+                    await userManager.AddToRoleAsync(employeeModel.IDUser, employeeRepository.GetRoleBasedOnPosition(employeeModel));
                 }
                 
                 employeeRepository.InsertEmployee(employeeModel);
@@ -107,10 +99,12 @@ namespace EmployeesVacations.Controllers
 
         // POST: Employee/Edit/5
         [HttpPost]
-        public ActionResult Edit(Guid id, FormCollection collection)
+        public async System.Threading.Tasks.Task<ActionResult> Edit(Guid id, FormCollection collection)
         {
             try
             {
+                EmployeeModel previousEmployeeDetails = employeeRepository.GetEmployeeByID(id);
+
                 var businessUnits = businessUnitRepository.GetAllBusinessUnits();
                 SelectList listBusinessUnits = new SelectList(businessUnits, "IDBusinessUnit", "Name");
                 ViewData["businessUnit"] = listBusinessUnits;
@@ -120,6 +114,14 @@ namespace EmployeesVacations.Controllers
                 EmployeeModel employeeModel = new EmployeeModel();
                 UpdateModel(employeeModel);
                 employeeRepository.UpdateEmployee(employeeModel);
+
+                if (employeeModel.Position != previousEmployeeDetails.Position)
+                {
+                    var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                    await userManager.RemoveFromRoleAsync(previousEmployeeDetails.IDUser, employeeRepository.GetRoleBasedOnPosition(previousEmployeeDetails));
+                    await userManager.AddToRoleAsync(previousEmployeeDetails.IDUser, employeeRepository.GetRoleBasedOnPosition(employeeModel));
+                }
+
                 return RedirectToAction("Index");
             }
             catch

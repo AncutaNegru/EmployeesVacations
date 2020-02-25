@@ -166,5 +166,18 @@ namespace EmployeesVacations.Repositories
             }
             return false;
         }
+
+        public string GetRoleBasedOnPosition(EmployeeModel employeeModel)
+        {
+            if (employeeModel.Position == PositionEnum.TeamLead)
+            {
+                return "Lead";
+            }
+            else if (employeeModel.Position == PositionEnum.BusinessUnitManager)
+            {
+                return "Manager";
+            }
+            else return "Employee";
+        }
     }
 }

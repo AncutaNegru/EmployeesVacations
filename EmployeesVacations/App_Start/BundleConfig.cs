@@ -31,8 +31,8 @@ namespace EmployeesVacations
                      "~/Scripts/Custom/Employees.js"));
 
             // Custom Styles
-            bundles.Add(new StyleBundle("~/bundles/Custom").Include(
-                     "~/Content/Custom/main.css"));
+            bundles.Add(new StyleBundle("~/bundles/CustomCSS").Include(
+                     "~/Content/CustomCSS/main.css"));
 
         }
     }
