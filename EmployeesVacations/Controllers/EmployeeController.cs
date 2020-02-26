@@ -73,6 +73,7 @@ namespace EmployeesVacations.Controllers
                 if(result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(employeeModel.IDUser, employeeRepository.GetRoleBasedOnPosition(employeeModel));
+                    await userManager.AddToRoleAsync(employeeModel.IDUser, "Temporary");
                 }
                 
                 employeeRepository.InsertEmployee(employeeModel);

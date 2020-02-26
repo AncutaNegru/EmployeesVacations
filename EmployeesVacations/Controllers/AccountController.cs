@@ -80,7 +80,8 @@ namespace EmployeesVacations.Controllers
             {
                 case SignInStatus.Success:
                     {
-                        if(model.Password == "Pa$5word")
+                        string userId = UserManager.FindByEmail(model.Email).Id;
+                        if (UserManager.IsInRole(userId, "Temporary"))
                             return RedirectToLocal("/Manage/ChangePassword");
                         else return RedirectToLocal(returnUrl);
                     }
