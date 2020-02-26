@@ -139,7 +139,7 @@ namespace EmployeesVacations.Controllers
 
         // POST: Employee/Delete/5
         [HttpPost]
-        public ActionResult Delete(Guid id, FormCollection collection)
+        public async System.Threading.Tasks.Task<ActionResult> Delete(Guid id, FormCollection collection)
         {
             try
             {
@@ -148,6 +148,7 @@ namespace EmployeesVacations.Controllers
                 {
                     vacationRequestRepository.DeleteVacationRequest(request.IDVacationRequest);
                 }
+
                 if(employeeRepository.IsTeamLead(id) == true)
                 {
                     teamRepository.UpdateTeamsIfTeamLeadDeleted(id);
@@ -156,7 +157,18 @@ namespace EmployeesVacations.Controllers
                 {
                     businessUnitRepository.UpdateBusinessUnitsIfManagerIsDeleted(id);
                 }
+
+                EmployeeModel employeeToDelete = employeeRepository.GetEmployeeByID(id);
+
+                var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var roles = await userManager.GetRolesAsync(employeeToDelete.IDUser);
+                await userManager.RemoveFromRolesAsync(employeeToDelete.IDUser, roles.ToArray());
+
+                var userToDelete = await userManager.FindByIdAsync(employeeToDelete.IDUser);
+                await userManager.DeleteAsync(userToDelete);
                 employeeRepository.DeleteEmployee(id);
+
+                
                 return RedirectToAction("Index");
             }
             catch
