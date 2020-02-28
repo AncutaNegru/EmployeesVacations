@@ -23,10 +23,27 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Business Units", "Index", "BusinessUnit")</li>
-                    <li>@Html.ActionLink("Teams", "Index", "Team")</li>
-                    <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
-                    <li>@Html.ActionLink("Vacation Requests", "Index", "VacationRequest")</li>
+                    @{ if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Business Units", "Index", "BusinessUnit")</li>
+                            <li>@Html.ActionLink("Teams", "Index", "Team")</li>
+                            <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
+                            <li>@Html.ActionLink("Vacation Requests", "Index", "VacationRequest")</li>
+                        }
+                    }
+                    @{ if (User.IsInRole("Manager"))
+                        {
+                            <li>@Html.ActionLink("Teams", "Index", "Team")</li>
+                            <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
+                            <li>@Html.ActionLink("Vacation Requests", "Index", "VacationRequest")</li>
+                        }
+                    }
+                    @{ if (User.IsInRole("Lead") || User.IsInRole("Employee"))
+                        {
+                            <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
+                            <li>@Html.ActionLink("Vacation Requests", "Index", "VacationRequest")</li>
+                        }
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

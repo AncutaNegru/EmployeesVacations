@@ -5,12 +5,15 @@ using System.Web;
 using System.Web.Mvc;
 using EmployeesVacations.Models;
 using EmployeesVacations.Repositories;
+using Microsoft.AspNet.Identity;
 
 namespace EmployeesVacations.Controllers
 {
     public class VacationRequestController : Controller
     {
         private VacationRequestRepository vacationRequestRepository = new VacationRequestRepository();
+        private EmployeeRepository employeeRepository = new EmployeeRepository();
+
         // GET: VacationRequest
         public ActionResult Index()
         {
@@ -28,6 +31,8 @@ namespace EmployeesVacations.Controllers
         // GET: VacationRequest/Create
         public ActionResult Create()
         {
+            EmployeeModel current = employeeRepository.GetEmployeeByUserId(User.Identity.GetUserId());
+            ViewData["idEmployee"] = current.IDEmployee;
             return View("CreateVacationRequest");
         }
 
@@ -35,6 +40,8 @@ namespace EmployeesVacations.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            EmployeeModel current = employeeRepository.GetEmployeeByUserId(User.Identity.GetUserId());
+            ViewData["idEmployee"] = current.IDEmployee;
             try
             {
                 VacationRequestModel vacationRequestModel = new VacationRequestModel();
