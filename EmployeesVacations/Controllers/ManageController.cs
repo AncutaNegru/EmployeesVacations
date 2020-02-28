@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using EmployeesVacations.Models;
+using EmployeesVacations.Repositories;
 
 namespace EmployeesVacations.Controllers
 {
@@ -237,8 +238,11 @@ namespace EmployeesVacations.Controllers
                 if (user != null)
                 {
                     if (UserManager.IsInRole(user.Id, "Temporary"))
-                    { 
+                    {
+                        EmployeeRepository employeeRepository = new EmployeeRepository();
+                        EmployeeModel employeeModel = employeeRepository.GetEmployeeByUserId(user.Id);
                         UserManager.RemoveFromRole(user.Id, "Temporary");
+                        await UserManager.AddToRoleAsync(user.Id, employeeRepository.GetRoleBasedOnPosition(employeeModel));
                     }
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }

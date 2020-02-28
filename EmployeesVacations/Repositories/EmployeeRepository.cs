@@ -179,5 +179,10 @@ namespace EmployeesVacations.Repositories
             }
             else return "Employee";
         }
+
+        public EmployeeModel GetEmployeeByUserId(string userId)
+        {
+            return MapDbObjectToModel(dbContext.Employees.FirstOrDefault(x => x.IDUser == userId));
+        }
     }
 }

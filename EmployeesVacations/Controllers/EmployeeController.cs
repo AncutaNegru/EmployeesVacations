@@ -72,7 +72,6 @@ namespace EmployeesVacations.Controllers
                 employeeModel.IDUser = user.Id;
                 if(result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(employeeModel.IDUser, employeeRepository.GetRoleBasedOnPosition(employeeModel));
                     await userManager.AddToRoleAsync(employeeModel.IDUser, "Temporary");
                 }
                 
