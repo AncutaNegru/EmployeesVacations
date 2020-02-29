@@ -112,7 +112,26 @@ namespace EmployeesVacations.Controllers
             {
                 VacationRequestModel vacationRequestModel = new VacationRequestModel();
                 UpdateModel(vacationRequestModel);
-                vacationRequestRepository.UpdateVacationRequest(vacationRequestModel);
+                if(vacationRequestModel.FirstApproval == ApprovalStatusEnum.Approved && vacationRequestModel.SecondApproval == ApprovalStatusEnum.Approved)
+                {
+                    vacationRequestModel.Status = ApprovalStatusEnum.Approved;
+                    vacationRequestRepository.UpdateVacationRequest(vacationRequestModel);
+                }
+                if (vacationRequestModel.FirstApproval == ApprovalStatusEnum.Rejected && vacationRequestModel.SecondApproval == ApprovalStatusEnum.Rejected)
+                {
+                    vacationRequestModel.Status = ApprovalStatusEnum.Rejected;
+                    vacationRequestRepository.UpdateVacationRequest(vacationRequestModel);
+                }
+                if (vacationRequestModel.FirstApproval == ApprovalStatusEnum.Rejected || vacationRequestModel.SecondApproval == ApprovalStatusEnum.Rejected)
+                {
+                    vacationRequestModel.Status = ApprovalStatusEnum.Rejected;
+                    vacationRequestRepository.UpdateVacationRequest(vacationRequestModel);
+                }
+                if (vacationRequestModel.FirstApproval == ApprovalStatusEnum.Pending || vacationRequestModel.SecondApproval == ApprovalStatusEnum.Pending)
+                {
+                    vacationRequestModel.Status = ApprovalStatusEnum.Pending;
+                    vacationRequestRepository.UpdateVacationRequest(vacationRequestModel);
+                }
                 return RedirectToAction("Index");
             }
             catch

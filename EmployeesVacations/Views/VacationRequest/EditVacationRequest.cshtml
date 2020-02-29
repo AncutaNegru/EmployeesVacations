@@ -94,9 +94,8 @@
     }
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EnumDropDownListFor(x => x.Status, new { @class = "form-control" })
+            @Html.HiddenFor(x => x.Status, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
         </div>
     </div>
