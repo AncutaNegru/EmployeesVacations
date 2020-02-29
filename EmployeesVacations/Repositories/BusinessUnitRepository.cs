@@ -60,6 +60,17 @@ namespace EmployeesVacations.Repositories
             BusinessUnitModel businessUnitModel = MapDbObjectToModel(dbContext.BusinessUnits.FirstOrDefault(x => x.IDBusinessUnit == id));
             return businessUnitModel;
         }
+
+        public List<BusinessUnitModel> GetBusinessUnitsByManagerId(Guid id)
+        {
+            List<BusinessUnitModel> businessUnitModelList = new List<BusinessUnitModel>();
+            List<BusinessUnit> dbBusinessUnits = dbContext.BusinessUnits.Where(x => x.IDBusinessUnitManager == id).ToList();
+            foreach(BusinessUnit dbBusinessUnit in dbBusinessUnits)
+            {
+                businessUnitModelList.Add(MapDbObjectToModel(dbBusinessUnit));
+            }
+            return businessUnitModelList;
+        }
         public void InsertBusinessUnit(BusinessUnitModel businessUnitModel)
         {
             businessUnitModel.IDBusinessUnit = Guid.NewGuid();

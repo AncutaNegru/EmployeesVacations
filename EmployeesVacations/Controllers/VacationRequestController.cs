@@ -14,15 +14,22 @@ namespace EmployeesVacations.Controllers
         private VacationRequestRepository vacationRequestRepository = new VacationRequestRepository();
         private EmployeeRepository employeeRepository = new EmployeeRepository();
         private TeamRepository teamRepository = new TeamRepository();
+        private BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository();
 
         // GET: VacationRequest
         public ActionResult Index()
         {
             string idLoggedInUser = User.Identity.GetUserId();
             EmployeeModel employee = employeeRepository.GetEmployeeByUserId(idLoggedInUser);
-            if (employee != null && employee.Position == PositionEnum.TeamLead)
+            List<VacationRequestModel> allVacationRequests;
+            if (employee == null)
             {
-                List<VacationRequestModel> allVacationRequests = new List<VacationRequestModel>();
+                allVacationRequests = vacationRequestRepository.GetAllVacationRequests();
+                return View("Index", allVacationRequests);
+            }
+            if (employee.Position == PositionEnum.TeamLead)
+            {
+                allVacationRequests = new List<VacationRequestModel>();
                 List<TeamModel> teamsLeadByCurrentEmployee = teamRepository.GetAllTeamsByTeamLeadID(employee.IDEmployee);
                 foreach (TeamModel team in teamsLeadByCurrentEmployee)
                 {
@@ -34,12 +41,22 @@ namespace EmployeesVacations.Controllers
                 }
                 return View("Index", allVacationRequests);
             }
-
-            else
+            if(employee.Position == PositionEnum.BusinessUnitManager)
             {
-                List<VacationRequestModel> allVacationRequests = vacationRequestRepository.GetAllVacationRequests();
+                allVacationRequests = new List<VacationRequestModel>();
+                List<BusinessUnitModel> businessManagedByCurrentEmployee = businessUnitRepository.GetBusinessUnitsByManagerId(employee.IDEmployee);
+                foreach(BusinessUnitModel business in businessManagedByCurrentEmployee)
+                {
+                    List<VacationRequestModel> vacationsInBusinessUnit = vacationRequestRepository.GetAllVacationRequestsByBusinessUnitId(business.IDBusinessUnit);
+                    foreach(VacationRequestModel vacation in vacationsInBusinessUnit)
+                    {
+                        allVacationRequests.Add(vacation);
+                    }
+                }
                 return View("Index", allVacationRequests);
-            } 
+            }
+            allVacationRequests = vacationRequestRepository.GetAllVacationRequestsByEmployeeId(employee.IDEmployee);
+            return View("Index", allVacationRequests);
         }
 
         // GET: VacationRequest/Details/5
