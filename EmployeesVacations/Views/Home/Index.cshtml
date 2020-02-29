@@ -4,7 +4,16 @@
 
 <div class="homepage-title">
     <h2>Vacation Requests</h2>
-    <p><a href="/Account/Login" class="btn btn-primary btn-lg">Log in &raquo;</a></p>
+    @{ if(User.Identity.IsAuthenticated)
+       {
+            <p><a href="/VacationRequest/Create" class="btn btn-primary btn-lg">Ask for a Vacation! &raquo;</a></p>
+       }
+        else
+        {
+            <p><a href="/Account/Login" class="btn btn-primary btn-lg">Log in &raquo;</a></p>
+        }
+    }
+
 </div>
 
 <div class="row">

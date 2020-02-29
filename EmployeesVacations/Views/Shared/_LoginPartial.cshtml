@@ -1,28 +1,28 @@
 ﻿@using Microsoft.AspNet.Identity
 @using EmployeesVacations.Repositories;
 @if (Request.IsAuthenticated)
-{
+ {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @{ if(User.IsInRole("Admin"))
-                      { @Html.ActionLink("Hello Admin!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })}
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @{ if (User.IsInRole("Admin"))
+                    { @Html.ActionLink("Hello Admin!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })}
                 else
                 {
                     EmployeeRepository employeeRepository = new EmployeeRepository();
                     @Html.ActionLink("Hello " + employeeRepository.GetEmployeeByUserId(User.Identity.GetUserId()).FirstName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
                 }
-            }
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+                }
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
     }
-}
+ }
 else
-{
+{    
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
