@@ -104,7 +104,23 @@ namespace EmployeesVacations.Repositories
         public void InsertVacationRequest(VacationRequestModel vacationRequestModel)
         {
             vacationRequestModel.IDVacationRequest = Guid.NewGuid();
-            dbContext.VacationRequests.InsertOnSubmit(MapModelToDbObject(vacationRequestModel));
+            vacationRequestModel.FirstApproval = ApprovalStatusEnum.Pending;
+            vacationRequestModel.SecondApproval = ApprovalStatusEnum.Pending;
+            vacationRequestModel.Status = ApprovalStatusEnum.Pending;
+            VacationRequest dbVacationRequest = new VacationRequest();
+            if (vacationRequestModel != null)
+            {
+                dbVacationRequest.IDVacationRequest = vacationRequestModel.IDVacationRequest;
+                dbVacationRequest.IDEmployee = vacationRequestModel.IDEmployee;
+                dbVacationRequest.Reason = vacationRequestModel.Reason;
+                dbVacationRequest.StartDate = vacationRequestModel.StartDate;
+                dbVacationRequest.EndDate = vacationRequestModel.EndDate;
+                dbVacationRequest.DaysRequested = vacationRequestModel.DaysRequested;
+                dbVacationRequest.FirstApproval = (int)vacationRequestModel.FirstApproval;
+                dbVacationRequest.SecondApproval = (int)vacationRequestModel.SecondApproval;
+                dbVacationRequest.Status = (int)vacationRequestModel.Status;
+            }
+            dbContext.VacationRequests.InsertOnSubmit(dbVacationRequest);
             dbContext.SubmitChanges();
         }
         public void UpdateVacationRequest(VacationRequestModel vacationRequestModel)
