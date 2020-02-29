@@ -8,6 +8,8 @@ using EmployeesVacations.Repositories;
 
 namespace EmployeesVacations.Controllers
 {
+
+    [Authorize(Roles = "Admin, Manager")]
     public class TeamController : Controller
     {
         private TeamRepository teamRepository = new TeamRepository();

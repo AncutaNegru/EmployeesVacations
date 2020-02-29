@@ -79,6 +79,17 @@ namespace EmployeesVacations.Repositories
             }
             return requestsListByEmployeeID;
         }
+
+        public List<VacationRequestModel> GetAllVacationRequestsByTeamId(Guid id)
+        {
+            List<VacationRequestModel> requestsListByTeamID = new List<VacationRequestModel>();
+            List<VacationRequest> dbVacationRequestsByTeamId = dbContext.VacationRequests.Where(x => x.Employee.IDTeam == id).ToList();
+            foreach (VacationRequest dbVacationRequest in dbVacationRequestsByTeamId)
+            {
+                requestsListByTeamID.Add(MapDbObjectToModel(dbVacationRequest));
+            }
+            return requestsListByTeamID;
+        }
         public void InsertVacationRequest(VacationRequestModel vacationRequestModel)
         {
             vacationRequestModel.IDVacationRequest = Guid.NewGuid();

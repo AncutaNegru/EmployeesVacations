@@ -30,6 +30,7 @@ namespace EmployeesVacations.Controllers
             return View("DetailsEmployee", employeeModel);
         }
 
+        [Authorize(Roles = "Admin, Manager, Lead")]
         // GET: Employee/Create
         public ActionResult Create()
         {
@@ -51,6 +52,7 @@ namespace EmployeesVacations.Controllers
             return Json(teams, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize(Roles = "Admin, Manager, Lead")]
         // POST: Employee/Create
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> Create(FormCollection collection)
@@ -84,6 +86,7 @@ namespace EmployeesVacations.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Manager, Lead")]
         // GET: Employee/Edit/5
         public ActionResult Edit(Guid id)
         {
@@ -97,24 +100,24 @@ namespace EmployeesVacations.Controllers
             return View("EditEmployee", employeeModel);
         }
 
+        [Authorize(Roles = "Admin, Manager, Lead")]
         // POST: Employee/Edit/5
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> Edit(Guid id, FormCollection collection)
         {
+            var businessUnits = businessUnitRepository.GetAllBusinessUnits();
+            SelectList listBusinessUnits = new SelectList(businessUnits, "IDBusinessUnit", "Name");
+            ViewData["businessUnit"] = listBusinessUnits;
+            var teams = new List<TeamModel>();
+            SelectList listTeams = new SelectList(teams, "IDTeam", "Name");
+            ViewData["team"] = listTeams;
             try
             {
-                EmployeeModel previousEmployeeDetails = employeeRepository.GetEmployeeByID(id);
-
-                var businessUnits = businessUnitRepository.GetAllBusinessUnits();
-                SelectList listBusinessUnits = new SelectList(businessUnits, "IDBusinessUnit", "Name");
-                ViewData["businessUnit"] = listBusinessUnits;
-                var teams = new List<TeamModel>();
-                SelectList listTeams = new SelectList(teams, "IDTeam", "Name");
-                ViewData["team"] = listTeams;
                 EmployeeModel employeeModel = new EmployeeModel();
                 UpdateModel(employeeModel);
                 employeeRepository.UpdateEmployee(employeeModel);
 
+                EmployeeModel previousEmployeeDetails = employeeRepository.GetEmployeeByID(id);
                 if (employeeModel.Position != previousEmployeeDetails.Position)
                 {
                     var userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -130,6 +133,7 @@ namespace EmployeesVacations.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Manager, Lead")]
         // GET: Employee/Delete/5
         public ActionResult Delete(Guid id)
         {
@@ -137,6 +141,7 @@ namespace EmployeesVacations.Controllers
             return View("DeleteEmployee", employeeModel);
         }
 
+        [Authorize(Roles = "Admin, Manager, Lead")]
         // POST: Employee/Delete/5
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> Delete(Guid id, FormCollection collection)

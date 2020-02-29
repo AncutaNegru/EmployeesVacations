@@ -133,6 +133,7 @@ namespace EmployeesVacations.Repositories
                 dbEmployee.HiringDate = employeeModel.HiringDate;
                 dbEmployee.TotalDaysOff = employeeModel.TotalDaysOff;
                 dbEmployee.DaysOffLeft = employeeModel.DaysOffLeft;
+                dbEmployee.IDUser = employeeModel.IDUser;
                 dbContext.SubmitChanges();
             }
         }

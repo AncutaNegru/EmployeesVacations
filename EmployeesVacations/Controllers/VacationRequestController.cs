@@ -13,12 +13,33 @@ namespace EmployeesVacations.Controllers
     {
         private VacationRequestRepository vacationRequestRepository = new VacationRequestRepository();
         private EmployeeRepository employeeRepository = new EmployeeRepository();
+        private TeamRepository teamRepository = new TeamRepository();
 
         // GET: VacationRequest
         public ActionResult Index()
         {
-            List<VacationRequestModel> allVacationRequests = vacationRequestRepository.GetAllVacationRequests();
-            return View("Index", allVacationRequests);
+            string idLoggedInUser = User.Identity.GetUserId();
+            EmployeeModel employee = employeeRepository.GetEmployeeByUserId(idLoggedInUser);
+            if (employee != null && employee.Position == PositionEnum.TeamLead)
+            {
+                List<VacationRequestModel> allVacationRequests = new List<VacationRequestModel>();
+                List<TeamModel> teamsLeadByCurrentEmployee = teamRepository.GetAllTeamsByTeamLeadID(employee.IDEmployee);
+                foreach (TeamModel team in teamsLeadByCurrentEmployee)
+                {
+                    List<VacationRequestModel> vacationsInTeam = vacationRequestRepository.GetAllVacationRequestsByTeamId(team.IDTeam);
+                    foreach (VacationRequestModel vacation in vacationsInTeam)
+                    {
+                        allVacationRequests.Add(vacation);
+                    }
+                }
+                return View("Index", allVacationRequests);
+            }
+
+            else
+            {
+                List<VacationRequestModel> allVacationRequests = vacationRequestRepository.GetAllVacationRequests();
+                return View("Index", allVacationRequests);
+            } 
         }
 
         // GET: VacationRequest/Details/5
@@ -28,6 +49,7 @@ namespace EmployeesVacations.Controllers
             return View("DetailsVacationRequest", vacationRequestModel);
         }
 
+        [Authorize(Roles = "Manager, Lead, Employee")]
         // GET: VacationRequest/Create
         public ActionResult Create()
         {
@@ -36,6 +58,7 @@ namespace EmployeesVacations.Controllers
             return View("CreateVacationRequest");
         }
 
+        [Authorize(Roles = "Manager, Lead, Employee")]
         // POST: VacationRequest/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
@@ -55,6 +78,7 @@ namespace EmployeesVacations.Controllers
             }
         }
 
+        [Authorize(Roles = "Manager, Lead")]
         // GET: VacationRequest/Edit/5
         public ActionResult Edit(Guid id)
         {
@@ -62,6 +86,7 @@ namespace EmployeesVacations.Controllers
             return View("EditVacationRequest", vacationRequestModel);
         }
 
+        [Authorize(Roles = "Manager, Lead")]
         // POST: VacationRequest/Edit/5
         [HttpPost]
         public ActionResult Edit(Guid id, FormCollection collection)
@@ -79,6 +104,7 @@ namespace EmployeesVacations.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Manager, Lead")]
         // GET: VacationRequest/Delete/5
         public ActionResult Delete(Guid id)
         {
@@ -86,6 +112,7 @@ namespace EmployeesVacations.Controllers
             return View("DeleteVacationRequest", vacationRequestModel);
         }
 
+        [Authorize(Roles = "Admin, Manager, Lead")]
         // POST: VacationRequest/Delete/5
         [HttpPost]
         public ActionResult Delete(Guid id, FormCollection collection)

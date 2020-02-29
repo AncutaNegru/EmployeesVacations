@@ -138,7 +138,7 @@ namespace EmployeesVacations.Controllers
                     return View(model);
             }
         }
-
+        /*
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -175,7 +175,7 @@ namespace EmployeesVacations.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
+        }*/
 
         //
         // GET: /Account/ConfirmEmail

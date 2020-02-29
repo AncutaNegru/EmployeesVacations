@@ -8,8 +8,14 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @{ EmployeeRepository employeeRepository = new EmployeeRepository();}
-            @Html.ActionLink("Hello " + employeeRepository.GetEmployeeByUserId(User.Identity.GetUserId()).FirstName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @{ if(User.IsInRole("Admin"))
+                      { @Html.ActionLink("Hello Admin!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })}
+                else
+                {
+                    EmployeeRepository employeeRepository = new EmployeeRepository();
+                    @Html.ActionLink("Hello " + employeeRepository.GetEmployeeByUserId(User.Identity.GetUserId()).FirstName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                }
+            }
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
@@ -18,7 +24,6 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

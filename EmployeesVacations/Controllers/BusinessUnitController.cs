@@ -8,6 +8,7 @@ using EmployeesVacations.Models;
 
 namespace EmployeesVacations.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class BusinessUnitController : Controller
     {
         private BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository();

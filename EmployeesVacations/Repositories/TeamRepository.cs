@@ -72,6 +72,16 @@ namespace EmployeesVacations.Repositories
             TeamModel teamModel = MapDbObjectToModel(dbContext.Teams.FirstOrDefault(x => x.IDTeam == id));
             return teamModel;
         }
+
+        public List<TeamModel> GetAllTeamsByTeamLeadID(Guid id)
+        {
+            List<TeamModel> allTeamsByTeamLeadId = new List<TeamModel>();
+            foreach (Team dbTeam in dbContext.Teams.Where(x => x.IDTeamLead == id))
+            {
+                allTeamsByTeamLeadId.Add(MapDbObjectToModel(dbTeam));
+            }
+            return allTeamsByTeamLeadId;
+        }
         public void InsertTeam(TeamModel teamModel)
         {
             teamModel.IDTeam = Guid.NewGuid();
