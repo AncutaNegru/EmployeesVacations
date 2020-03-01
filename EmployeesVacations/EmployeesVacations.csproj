@@ -211,6 +211,7 @@
     <Compile Include="Repositories\TeamRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\EmployeeVacationRequestsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\employeesandvacations.mdf" />
@@ -308,7 +309,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\CustomCSS\Images\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
