@@ -28,14 +28,14 @@
                             <li>@Html.ActionLink("Business Units", "Index", "BusinessUnit")</li>
                             <li>@Html.ActionLink("Teams", "Index", "Team")</li>
                             <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
-                            <li>@Html.ActionLink("Vacation Requests", "Index", "VacationRequest")</li>
+                            <li>@Html.ActionLink("Employees Requests", "Index", "VacationRequest")</li>
                         }
                     }
                     @{ if (User.IsInRole("Manager"))
                         {
                             <li>@Html.ActionLink("Teams", "Index", "Team")</li>
                             <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
-                            <li>@Html.ActionLink("Vacation Requests", "Index", "VacationRequest")</li>
+                            <li>@Html.ActionLink("Employees Requests", "Index", "VacationRequest")</li>
                         }
                     }
                     @{ if (User.IsInRole("Lead") || User.IsInRole("Employee"))

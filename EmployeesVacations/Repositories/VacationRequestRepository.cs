@@ -80,6 +80,17 @@ namespace EmployeesVacations.Repositories
             return requestsListByEmployeeID;
         }
 
+        public List<VacationRequestModel> GetAllApprovedVacationRequestsByEmployeeId(Guid id)
+        {
+            List<VacationRequestModel> approvedRequestsListByEmployeeID = new List<VacationRequestModel>();
+            List<VacationRequest> dbApprovedVacationRequestsByEmployeeId = dbContext.VacationRequests.Where(x => x.IDEmployee == id && x.Status == (int)ApprovalStatusEnum.Approved).ToList();
+            foreach (VacationRequest dbVacationRequest in dbApprovedVacationRequestsByEmployeeId)
+            {
+                approvedRequestsListByEmployeeID.Add(MapDbObjectToModel(dbVacationRequest));
+            }
+            return approvedRequestsListByEmployeeID;
+        }
+
         public List<VacationRequestModel> GetAllVacationRequestsByTeamId(Guid id)
         {
             List<VacationRequestModel> requestsListByTeamID = new List<VacationRequestModel>();
