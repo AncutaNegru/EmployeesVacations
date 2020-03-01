@@ -72,10 +72,10 @@ namespace EmployeesVacations.Controllers
         {
             EmployeeModel current = employeeRepository.GetEmployeeByUserId(User.Identity.GetUserId());
             ViewData["idEmployee"] = current.IDEmployee;
-            //if(current.DaysOffLeft == 0)
-            //{
-                //return View("NoAllowed");
-            //}
+            if(current.DaysOffLeft == 0)
+            {
+                return View("NoAccess");
+            }
             return View("CreateVacationRequest");
         }
 
@@ -90,6 +90,10 @@ namespace EmployeesVacations.Controllers
             {
                 VacationRequestModel vacationRequestModel = new VacationRequestModel();
                 UpdateModel(vacationRequestModel);
+                if(vacationRequestModel.DaysRequested > current.DaysOffLeft || vacationRequestModel.DaysRequested > current.TotalDaysOff)
+                {
+                    return View("RequestNotValid");
+                }
                 vacationRequestRepository.InsertVacationRequest(vacationRequestModel);
                 return RedirectToAction("Index");
             }

@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<EmployeesVacations.Models.VacationRequestModel>
+@using Microsoft.AspNet.Identity;
+@using EmployeesVacations.Repositories;
 
 @{
     ViewBag.Title = "Index";
@@ -6,9 +8,25 @@
 
 <h2>Vacation Requests</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@{
+    EmployeeRepository employeeRepository = new EmployeeRepository();
+    if (User.IsInRole("Admin"))
+    {
+        <br/>
+    }
+    else
+    {
+        if ((employeeRepository.GetEmployeeByUserId(User.Identity.GetUserId())).DaysOffLeft == 0)
+        {
+            <p>No days off left unused!</p>
+        }
+        else
+        {
+            <p>@Html.ActionLink("Create New", "Create")</p>
+        }
+    }
+}
+
 <table class="table table-striped table-condensed table-hover">
     <tr>
         <th>
@@ -38,7 +56,8 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.EmployeeFullName)
@@ -70,5 +89,5 @@
                 @Html.ActionLink("Delete", "Delete", new { id = item.IDVacationRequest })
             </td>
         </tr>
-     }
+    }
 </table>

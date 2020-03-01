@@ -41,7 +41,7 @@
                     @{ if (User.IsInRole("Lead") || User.IsInRole("Employee"))
                         {
                             <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
-                            <li>@Html.ActionLink("Vacation Requests", "Index", "VacationRequest")</li>
+                            <li>@Html.ActionLink("Team Requests", "Index", "VacationRequest")</li>
                         }
                     }
                 </ul>
