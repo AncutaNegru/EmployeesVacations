@@ -36,6 +36,7 @@
                             <li>@Html.ActionLink("Teams", "Index", "Team")</li>
                             <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
                             <li>@Html.ActionLink("Employees Requests", "Index", "VacationRequest")</li>
+                            <li>@Html.ActionLink("My Profile", "MyProfile", "Employee")</li>
                         }
                     }
                     @{ if (User.IsInRole("Lead") || User.IsInRole("Employee"))

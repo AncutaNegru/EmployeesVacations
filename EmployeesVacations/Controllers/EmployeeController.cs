@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using EmployeesVacations.Models;
 using EmployeesVacations.Repositories;
+using EmployeesVacations.ViewModels;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace EmployeesVacations.Controllers
@@ -16,11 +18,25 @@ namespace EmployeesVacations.Controllers
         private TeamRepository teamRepository = new TeamRepository();
         private VacationRequestRepository vacationRequestRepository = new VacationRequestRepository();
 
+        [Authorize(Roles = "Admin, Manager, Lead")]
         // GET: Employee
         public ActionResult Index()
         {
             List<EmployeeModel> allEmployees = employeeRepository.GetAllEmployees();
             return View("Index", allEmployees);
+        }
+
+        [Authorize(Roles = "Manager, Lead, Employee")]
+        // GET: Employee/MyProfile
+        public ActionResult MyProfile()
+        {
+            if(User.Identity.IsAuthenticated)
+            {
+                Guid id = employeeRepository.GetEmployeeByUserId(User.Identity.GetUserId()).IDEmployee;
+                EmployeeVacationRequestsViewModel viewModel = employeeRepository.GetEmployeeVacationRequests(id);
+                return View("MyProfile", viewModel);
+            }
+            return RedirectToAction("Login", "Account");
         }
 
         // GET: Employee/Details/5

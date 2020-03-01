@@ -1,0 +1,80 @@
+﻿@model EmployeesVacations.ViewModels.EmployeeVacationRequestsViewModel
+
+@{
+    ViewBag.Title = "MyProfile";
+}
+
+<h2>MyProfile</h2>
+
+<div>
+    <h4>EmployeeVacationRequestsViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TeamName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeamName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BusinessUnitName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BusinessUnitName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HiringDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HiringDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalDaysOff)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalDaysOff)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DaysOffLeft)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DaysOffLeft)
+        </dd>
+
+    </dl>
+</div>
+
+@foreach(var item in Model.EmployeeVacations)
+{
+    <div>
+        <p>@Html.DisplayFor(modelItem => item.Reason)</p>
+        <p>@Html.DisplayFor(modelItem => item.StartDate)</p>
+        <p>@Html.DisplayFor(modelItem => item.EndDate)</p>
+        <p>@Html.DisplayFor(modelItem => item.DaysRequested)</p>
+        <p>@Html.DisplayFor(modelItem => item.FirstApproval)</p>
+        <p>@Html.DisplayFor(modelItem => item.SecondApproval)</p>
+        <p>@Html.DisplayFor(modelItem => item.Status)</p>
+    </div>
+
+}
+
+<p>
+    @Html.ActionLink("Back to Home Page", "Index", "Home")
+</p>

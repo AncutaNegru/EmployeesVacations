@@ -306,6 +306,7 @@
     <Content Include="Views\BusinessUnit\AlertTeamsAndEmployeesExist.cshtml" />
     <Content Include="Views\VacationRequest\NoAccess.cshtml" />
     <Content Include="Views\VacationRequest\RequestNotValid.cshtml" />
+    <Content Include="Views\Employee\MyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\CustomCSS\Images\" />
