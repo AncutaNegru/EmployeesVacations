@@ -72,6 +72,10 @@ namespace EmployeesVacations.Controllers
         {
             EmployeeModel current = employeeRepository.GetEmployeeByUserId(User.Identity.GetUserId());
             ViewData["idEmployee"] = current.IDEmployee;
+            //if(current.DaysOffLeft == 0)
+            //{
+                //return View("NoAllowed");
+            //}
             return View("CreateVacationRequest");
         }
 
@@ -116,6 +120,17 @@ namespace EmployeesVacations.Controllers
                 {
                     vacationRequestModel.Status = ApprovalStatusEnum.Approved;
                     vacationRequestRepository.UpdateVacationRequest(vacationRequestModel);
+
+                    List<VacationRequestModel> approvedVacations = vacationRequestRepository.GetAllApprovedVacationRequestsByEmployeeId(vacationRequestModel.IDEmployee);
+                    int totalDaysApproved = 0;
+                    foreach (VacationRequestModel vacation in approvedVacations)
+                    {
+                        totalDaysApproved = totalDaysApproved + vacation.DaysRequested;
+                    }
+                    EmployeeModel employee = employeeRepository.GetEmployeeByID(vacationRequestModel.IDEmployee);
+                    employee.DaysOffLeft = employee.TotalDaysOff - totalDaysApproved;
+                    UpdateModel(employee);
+                    employeeRepository.UpdateEmployee(employee);
                 }
                 if (vacationRequestModel.FirstApproval == ApprovalStatusEnum.Rejected && vacationRequestModel.SecondApproval == ApprovalStatusEnum.Rejected)
                 {
