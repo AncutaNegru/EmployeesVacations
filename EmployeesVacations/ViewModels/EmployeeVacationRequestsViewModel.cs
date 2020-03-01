@@ -20,7 +20,7 @@ namespace EmployeesVacations.ViewModels
 
         public int DaysOffLeft { get; set; }
 
-        public List<VacationRequestModel> employeeVacations = new List<VacationRequestModel>();
+        public List<VacationRequestModel> EmployeeVacations = new List<VacationRequestModel>();
 
     }
 }
