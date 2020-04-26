@@ -8,24 +8,7 @@
 
 <h2>Vacation Requests</h2>
 
-@{
-    EmployeeRepository employeeRepository = new EmployeeRepository();
-    if (User.IsInRole("Admin"))
-    {
-        <br/>
-    }
-    else
-    {
-        if ((employeeRepository.GetEmployeeByUserId(User.Identity.GetUserId())).DaysOffLeft == 0)
-        {
-            <p>No days off left unused!</p>
-        }
-        else
-        {
-            <p>@Html.ActionLink("Create New", "Create")</p>
-        }
-    }
-}
+<br/>
 
 <table class="table table-striped table-condensed table-hover">
     <tr>

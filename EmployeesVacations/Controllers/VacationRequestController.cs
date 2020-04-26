@@ -95,7 +95,7 @@ namespace EmployeesVacations.Controllers
                     return View("RequestNotValid");
                 }
                 vacationRequestRepository.InsertVacationRequest(vacationRequestModel);
-                return RedirectToAction("Index");
+                return RedirectToAction("MyProfile", "Employee");
             }
             catch
             {
