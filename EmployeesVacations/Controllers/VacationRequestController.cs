@@ -59,6 +59,48 @@ namespace EmployeesVacations.Controllers
             return View("Index", allVacationRequests);
         }
 
+        public ActionResult PendingList()
+        {
+            string idLoggedInUser = User.Identity.GetUserId();
+            EmployeeModel employee = employeeRepository.GetEmployeeByUserId(idLoggedInUser);
+            List<VacationRequestModel> allVacationRequests;
+            if (employee == null)
+            {
+                allVacationRequests = vacationRequestRepository.GetAllVacationRequests();
+                return View("Index", allVacationRequests);
+            }
+            if (employee.Position == PositionEnum.TeamLead)
+            {
+                allVacationRequests = new List<VacationRequestModel>();
+                List<TeamModel> teamsLeadByCurrentEmployee = teamRepository.GetAllTeamsByTeamLeadID(employee.IDEmployee);
+                foreach (TeamModel team in teamsLeadByCurrentEmployee)
+                {
+                    List<VacationRequestModel> vacationsInTeam = vacationRequestRepository.GetAllVacationRequestsByTeamIdFirstStatus(team.IDTeam);
+                    foreach (VacationRequestModel vacation in vacationsInTeam)
+                    {
+                        allVacationRequests.Add(vacation);
+                    }
+                }
+                return View("PendingList", allVacationRequests);
+            }
+            if (employee.Position == PositionEnum.BusinessUnitManager)
+            {
+                allVacationRequests = new List<VacationRequestModel>();
+                List<BusinessUnitModel> businessManagedByCurrentEmployee = businessUnitRepository.GetBusinessUnitsByManagerId(employee.IDEmployee);
+                foreach (BusinessUnitModel business in businessManagedByCurrentEmployee)
+                {
+                    List<VacationRequestModel> vacationsInBusinessUnit = vacationRequestRepository.GetAllVacationRequestsByBusinessUnitIdSecondStatus(business.IDBusinessUnit);
+                    foreach (VacationRequestModel vacation in vacationsInBusinessUnit)
+                    {
+                        allVacationRequests.Add(vacation);
+                    }
+                }
+                return View("PendingList", allVacationRequests);
+            }
+            allVacationRequests = vacationRequestRepository.GetAllVacationRequestsByEmployeeId(employee.IDEmployee);
+            return View("PendingList", allVacationRequests);
+        }
+
         // GET: VacationRequest/Details/5
         public ActionResult Details(Guid id)
         {
@@ -89,6 +131,11 @@ namespace EmployeesVacations.Controllers
             try
             {
                 VacationRequestModel vacationRequestModel = new VacationRequestModel();
+                if (current.Position == PositionEnum.BusinessUnitManager)
+                {
+                    vacationRequestModel.FirstApproval = ApprovalStatusEnum.Approved;
+                }
+                else vacationRequestModel.FirstApproval = ApprovalStatusEnum.Pending;
                 UpdateModel(vacationRequestModel);
                 if(vacationRequestModel.DaysRequested > current.DaysOffLeft || vacationRequestModel.DaysRequested > current.TotalDaysOff)
                 {

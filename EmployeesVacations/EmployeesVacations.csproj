@@ -350,6 +350,7 @@
     <Content Include="Views\VacationRequest\NoAccess.cshtml" />
     <Content Include="Views\VacationRequest\RequestNotValid.cshtml" />
     <Content Include="Views\Employee\MyProfile.cshtml" />
+    <Content Include="Views\VacationRequest\PendingList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\CustomCSS\Images\" />

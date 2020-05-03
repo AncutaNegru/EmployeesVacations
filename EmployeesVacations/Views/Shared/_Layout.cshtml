@@ -21,8 +21,6 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @{ if (User.IsInRole("Admin"))
                         {
                             <li>@Html.ActionLink("Business Units", "Index", "BusinessUnit")</li>
@@ -33,17 +31,17 @@
                     }
                     @{ if (User.IsInRole("Manager"))
                         {
+                            <li>@Html.ActionLink("My Profile", "MyProfile", "Employee")</li>
                             <li>@Html.ActionLink("Teams", "Index", "Team")</li>
                             <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
-                            <li>@Html.ActionLink("Employees Requests", "Index", "VacationRequest")</li>
-                            <li>@Html.ActionLink("My Profile", "MyProfile", "Employee")</li>
+                            <li>@Html.ActionLink("All Business Unit Requests", "Index", "VacationRequest")</li>
                         }
                     }
                     @{ if (User.IsInRole("Lead") || User.IsInRole("Employee"))
                         {
-                            <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
-                            <li>@Html.ActionLink("Team Requests", "Index", "VacationRequest")</li>
                             <li>@Html.ActionLink("My Profile", "MyProfile", "Employee")</li>
+                            <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
+                            <li>@Html.ActionLink("All Team Requests", "Index", "VacationRequest")</li>
                         }
                     }
                 </ul>

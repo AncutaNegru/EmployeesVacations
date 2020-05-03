@@ -4,10 +4,10 @@
 
 <div class="homepage-title">
     <h2>Vacation Requests</h2>
-    @{ if(User.Identity.IsAuthenticated)
-       {
+    @{ if (User.Identity.IsAuthenticated)
+        {
             <p><a href="/VacationRequest/Create" class="btn btn-primary btn-lg">Ask for a Vacation! &raquo;</a></p>
-       }
+        }
         else
         {
             <p><a href="/Account/Login" class="btn btn-primary btn-lg">Log in &raquo;</a></p>
@@ -16,11 +16,23 @@
 
 </div>
 
-<div class="row">
+<div>
 
 </div>
 
+<div>
+    @{ if (User.IsInRole("Manager") || User.IsInRole("Lead"))
+        {
+            <div>
+                <h4>Action Required</h4>
+                <p>
+                    Please be advised there are new employess vacation requests pending your review.
+                </p>
+                <p><a class="btn btn-default" href="/VacationRequest/PendingList">Go to List &raquo;</a></p>
+            </div>
+       }
+    }
+</div>
 
 
-   
 

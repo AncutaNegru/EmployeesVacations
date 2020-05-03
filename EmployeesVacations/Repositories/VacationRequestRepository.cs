@@ -102,20 +102,47 @@ namespace EmployeesVacations.Repositories
             return requestsListByTeamID;
         }
 
+        public List<VacationRequestModel> GetAllVacationRequestsByTeamIdFirstStatus(Guid id)
+        {
+            List<VacationRequestModel> requestsListByTeamIDFirstStatus = new List<VacationRequestModel>();
+            List<VacationRequest> dbVacationRequestsByTeamId = dbContext.VacationRequests.Where(x => x.Employee.IDTeam == id).ToList();
+            foreach (VacationRequest dbVacationRequest in dbVacationRequestsByTeamId)
+            {
+                if(dbVacationRequest.FirstApproval == 1)
+                {
+                    requestsListByTeamIDFirstStatus.Add(MapDbObjectToModel(dbVacationRequest));
+                }
+            }
+            return requestsListByTeamIDFirstStatus;
+        }
+
         public List<VacationRequestModel> GetAllVacationRequestsByBusinessUnitId(Guid id)
         {
             List<VacationRequestModel> requestsListByBusinessUnitID = new List<VacationRequestModel>();
             List<VacationRequest> dbVacationRequestsByBusinessUnitId = dbContext.VacationRequests.Where(x => x.Employee.IDBusinessUnit == id).ToList();
-            foreach(VacationRequest dbRequest in dbVacationRequestsByBusinessUnitId)
+            foreach (VacationRequest dbRequest in dbVacationRequestsByBusinessUnitId)
             {
                 requestsListByBusinessUnitID.Add(MapDbObjectToModel(dbRequest));
             }
             return requestsListByBusinessUnitID;
         }
+
+        public List<VacationRequestModel> GetAllVacationRequestsByBusinessUnitIdSecondStatus(Guid id)
+        {
+            List<VacationRequestModel> requestsListByBusinessUnitIDSecondStatus = new List<VacationRequestModel>();
+            List<VacationRequest> dbVacationRequestsByBusinessUnitId = dbContext.VacationRequests.Where(x => x.Employee.IDBusinessUnit == id).ToList();
+            foreach (VacationRequest dbRequest in dbVacationRequestsByBusinessUnitId)
+            {
+                if(dbRequest.FirstApproval != 1 && dbRequest.SecondApproval == 1)
+                {
+                    requestsListByBusinessUnitIDSecondStatus.Add(MapDbObjectToModel(dbRequest));
+                }
+            }
+            return requestsListByBusinessUnitIDSecondStatus;
+        }
         public void InsertVacationRequest(VacationRequestModel vacationRequestModel)
         {
             vacationRequestModel.IDVacationRequest = Guid.NewGuid();
-            vacationRequestModel.FirstApproval = ApprovalStatusEnum.Pending;
             vacationRequestModel.SecondApproval = ApprovalStatusEnum.Pending;
             vacationRequestModel.Status = ApprovalStatusEnum.Pending;
             VacationRequest dbVacationRequest = new VacationRequest();

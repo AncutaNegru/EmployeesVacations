@@ -1,0 +1,56 @@
+﻿@model IEnumerable<EmployeesVacations.Models.VacationRequestModel>
+
+@{
+    ViewBag.Title = "PendingList";
+}
+
+<h2>Pending Review</h2>
+
+<br/>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeFullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reason)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DaysRequested)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeFullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DaysRequested)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.IDVacationRequest }) |
+            @Html.ActionLink("Details", "Details", new { id = item.IDVacationRequest }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.IDVacationRequest })
+        </td>
+    </tr>
+}
+
+</table>
