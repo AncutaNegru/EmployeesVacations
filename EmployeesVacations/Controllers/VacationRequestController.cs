@@ -198,7 +198,7 @@ namespace EmployeesVacations.Controllers
                     vacationRequestModel.Status = ApprovalStatusEnum.Pending;
                     vacationRequestRepository.UpdateVacationRequest(vacationRequestModel);
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
