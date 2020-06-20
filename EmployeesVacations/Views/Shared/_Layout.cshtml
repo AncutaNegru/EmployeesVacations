@@ -37,10 +37,16 @@
                             <li>@Html.ActionLink("All Business Unit Requests", "Index", "VacationRequest")</li>
                         }
                     }
-                    @{ if (User.IsInRole("Lead") || User.IsInRole("Employee"))
+                    @{ if (User.IsInRole("Lead"))
                         {
                             <li>@Html.ActionLink("My Profile", "MyProfile", "Employee")</li>
                             <li>@Html.ActionLink("Employees", "Index", "Employee")</li>
+                            <li>@Html.ActionLink("All Team Requests", "Index", "VacationRequest")</li>
+                        }
+                    }
+                    @{ if (User.IsInRole("Employee"))
+                        {
+                            <li>@Html.ActionLink("My Profile", "MyProfile", "Employee")</li>
                             <li>@Html.ActionLink("All Team Requests", "Index", "VacationRequest")</li>
                         }
                     }

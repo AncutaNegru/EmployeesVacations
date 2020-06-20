@@ -55,7 +55,7 @@ namespace EmployeesVacations.Controllers
                 }
                 return View("Index", allVacationRequests);
             }
-            allVacationRequests = vacationRequestRepository.GetAllVacationRequestsByEmployeeId(employee.IDEmployee);
+            allVacationRequests = vacationRequestRepository.GetAllVacationRequestsByTeamId(employee.IDTeam);
             return View("Index", allVacationRequests);
         }
 
