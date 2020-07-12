@@ -19,46 +19,54 @@ namespace EmployeesVacations.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                string idLoggedInUser = User.Identity.GetUserId();
-                EmployeeModel employee = employeeRepository.GetEmployeeByUserId(idLoggedInUser);
-                List<VacationRequestModel> allVacationRequests;
-                allVacationRequests = new List<VacationRequestModel>();
-
-                if (employee.Position == PositionEnum.TeamLead)
-                {
-                    List<TeamModel> teamsLeadByCurrentEmployee = teamRepository.GetAllTeamsByTeamLeadID(employee.IDEmployee);
-                    foreach (TeamModel team in teamsLeadByCurrentEmployee)
-                    {
-                        List<VacationRequestModel> vacationsInTeam = vacationRequestRepository.GetAllVacationRequestsByTeamIdFirstStatus(team.IDTeam);
-                        foreach (VacationRequestModel vacation in vacationsInTeam)
-                        {
-                            allVacationRequests.Add(vacation);
-                        }
-                    }
-                }
-
-                if (employee.Position == PositionEnum.BusinessUnitManager)
-                {
-                    List<BusinessUnitModel> businessManagedByCurrentEmployee = businessUnitRepository.GetBusinessUnitsByManagerId(employee.IDEmployee);
-                    foreach (BusinessUnitModel business in businessManagedByCurrentEmployee)
-                    {
-                        List<VacationRequestModel> vacationsInBusinessUnit = vacationRequestRepository.GetAllVacationRequestsByBusinessUnitIdSecondStatus(business.IDBusinessUnit);
-                        foreach (VacationRequestModel vacation in vacationsInBusinessUnit)
-                        {
-                            allVacationRequests.Add(vacation);
-                        }
-                    }
-                }
-
-                if (allVacationRequests.Count == 0)
+                if (User.IsInRole("Admin"))
                 {
                     ViewData["showRequests"] = false;
+                    return View();
                 }
                 else
                 {
-                    ViewData["showRequests"] = true;
+                    string idLoggedInUser = User.Identity.GetUserId();
+                    EmployeeModel employee = employeeRepository.GetEmployeeByUserId(idLoggedInUser);
+                    List<VacationRequestModel> allVacationRequests;
+                    allVacationRequests = new List<VacationRequestModel>();
+
+                    if (employee.Position == PositionEnum.TeamLead)
+                    {
+                        List<TeamModel> teamsLeadByCurrentEmployee = teamRepository.GetAllTeamsByTeamLeadID(employee.IDEmployee);
+                        foreach (TeamModel team in teamsLeadByCurrentEmployee)
+                        {
+                            List<VacationRequestModel> vacationsInTeam = vacationRequestRepository.GetAllVacationRequestsByTeamIdFirstStatus(team.IDTeam);
+                            foreach (VacationRequestModel vacation in vacationsInTeam)
+                            {
+                                allVacationRequests.Add(vacation);
+                            }
+                        }
+                    }
+
+                    if (employee.Position == PositionEnum.BusinessUnitManager)
+                    {
+                        List<BusinessUnitModel> businessManagedByCurrentEmployee = businessUnitRepository.GetBusinessUnitsByManagerId(employee.IDEmployee);
+                        foreach (BusinessUnitModel business in businessManagedByCurrentEmployee)
+                        {
+                            List<VacationRequestModel> vacationsInBusinessUnit = vacationRequestRepository.GetAllVacationRequestsByBusinessUnitIdSecondStatus(business.IDBusinessUnit);
+                            foreach (VacationRequestModel vacation in vacationsInBusinessUnit)
+                            {
+                                allVacationRequests.Add(vacation);
+                            }
+                        }
+                    }
+
+                    if (allVacationRequests.Count == 0)
+                    {
+                        ViewData["showRequests"] = false;
+                    }
+                    else
+                    {
+                        ViewData["showRequests"] = true;
+                    }
+                    return View();
                 }
-                return View();
             }
             ViewData["showRequests"] = false;
             return View();

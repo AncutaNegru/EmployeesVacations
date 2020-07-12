@@ -59,6 +59,7 @@ namespace EmployeesVacations.Controllers
             return View("Index", allVacationRequests);
         }
 
+        [Authorize(Roles = "Manager, Lead")]
         public ActionResult PendingList()
         {
             string idLoggedInUser = User.Identity.GetUserId();

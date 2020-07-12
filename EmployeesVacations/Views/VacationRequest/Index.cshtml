@@ -67,9 +67,18 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.IDVacationRequest }) |
-                @Html.ActionLink("Details", "Details", new { id = item.IDVacationRequest }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.IDVacationRequest })
+                @if (User.IsInRole("Manager") || User.IsInRole("Lead"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IDVacationRequest })
+                    <span>|</span>
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.IDVacationRequest })
+
+                @if (User.IsInRole("Manager") || User.IsInRole("Lead") || User.IsInRole("Admin"))
+                {
+                    <span>|</span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IDVacationRequest })
+                }
             </td>
         </tr>
     }
