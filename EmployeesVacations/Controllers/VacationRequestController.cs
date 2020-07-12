@@ -173,16 +173,7 @@ namespace EmployeesVacations.Controllers
                     vacationRequestModel.Status = ApprovalStatusEnum.Approved;
                     vacationRequestRepository.UpdateVacationRequest(vacationRequestModel);
 
-                    List<VacationRequestModel> approvedVacations = vacationRequestRepository.GetAllApprovedVacationRequestsByEmployeeId(vacationRequestModel.IDEmployee);
-                    int totalDaysApproved = 0;
-                    foreach (VacationRequestModel vacation in approvedVacations)
-                    {
-                        totalDaysApproved = totalDaysApproved + vacation.DaysRequested;
-                    }
-                    EmployeeModel employee = employeeRepository.GetEmployeeByID(vacationRequestModel.IDEmployee);
-                    employee.DaysOffLeft = employee.TotalDaysOff - totalDaysApproved;
-                    UpdateModel(employee);
-                    employeeRepository.UpdateEmployee(employee);
+                  
                 }
                 if (vacationRequestModel.FirstApproval == ApprovalStatusEnum.Rejected && vacationRequestModel.SecondApproval == ApprovalStatusEnum.Rejected)
                 {
@@ -199,6 +190,18 @@ namespace EmployeesVacations.Controllers
                     vacationRequestModel.Status = ApprovalStatusEnum.Pending;
                     vacationRequestRepository.UpdateVacationRequest(vacationRequestModel);
                 }
+
+                List<VacationRequestModel> approvedVacations = vacationRequestRepository.GetAllApprovedVacationRequestsByEmployeeId(vacationRequestModel.IDEmployee);
+                int totalDaysApproved = 0;
+                foreach (VacationRequestModel vacation in approvedVacations)
+                {
+                    totalDaysApproved = totalDaysApproved + vacation.DaysRequested;
+                }
+                EmployeeModel employee = employeeRepository.GetEmployeeByID(vacationRequestModel.IDEmployee);
+                employee.DaysOffLeft = employee.TotalDaysOff - totalDaysApproved;
+                UpdateModel(employee);
+                employeeRepository.UpdateEmployee(employee);
+
                 return RedirectToAction("Index", "Home");
             }
             catch
